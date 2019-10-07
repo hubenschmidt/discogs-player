@@ -42,12 +42,17 @@
     "nyc": "^14.1.1"
   },
   "dependencies": {
+    "connect-session-sequelize": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "esm": "^3.2.25",
     "express": "^4.16.3",
+    "express-session": "^1.16.2",
     "if-env": "^1.0.4",
     "morgan": "^1.9.1",
     "mysql2": "^1.7.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
