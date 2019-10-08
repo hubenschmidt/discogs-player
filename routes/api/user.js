@@ -1,8 +1,14 @@
 const router = require("express").Router();
-const RecordController = require("../controllers/RecordController");
+const User = require("../controllers/UserController");
 
 //matches with /api/user
-router.get('/',)
+router.post('/', (req, res) => {
+    console.log('user signup')
+    const { username, password } = req.body;
+
+
+
+})
 
 // router.get('/', RecordController.getAllRecords);
 // router.post('/', RecordController.addRecord);
