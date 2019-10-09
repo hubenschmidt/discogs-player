@@ -1,14 +1,10 @@
+// routes/api/user
+
 const router = require("express").Router();
-const User = require("../../controllers/UserController");
+const UserController = require("../../controllers/UserController");
 
 //matches with /api/user
-router.post('/', (req, res) => {
-    console.log('user signup')
-    const { username, password } = req.body;
-
-
-
-})
+router.post('/', UserController.testWithoutService)
 
 // router.get('/', RecordController.getAllRecords);
 // router.post('/', RecordController.addRecord);
