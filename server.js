@@ -2,7 +2,7 @@ const config = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser")
 const path = require("path");
-const recordRoutes = require('./routes/RecordRoutes');
+// const recordRoutes = require('./routes/RecordRoutes');
 const db = require("./models");
 
 const morgan = require("morgan");
@@ -30,8 +30,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-//set up routes
-app.use('/api/v1/records', recordRoutes);
+// //set up routes
+// app.use('/api/v1/records', recordRoutes);
 
 const PORT = process.env.PORT || 5000;
 
