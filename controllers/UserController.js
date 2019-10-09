@@ -1,20 +1,29 @@
 // controllers/UserController.js
 
-const UserService = require("../services/UserService")
+const UserService = require("../services/UserService");
 //add utils
 
 class UserController {
-    static async findOrCreate(req, res){
-        console.log('user signup');
-        const { username, password } = req.body;
+  static async findOrCreate(req, res) {
+    console.log("user signup");
+    const { username, password } = req.body;
 
-        //ADD VALIDATION
-        try {
-            const createdOrFoundUser = await UserService.findOrCreate( { where: { username: username}, defaults: { password: password }})
-        } catch (error) {
-            res.send(error)
-        }
+    try {
+      const createdOrFoundUser = await UserService.findOrCreate({
+        where: { username: username },
+        defaults: { password: password }
+      });
+      if (!createdOrFoundUser) {
+        console.log("Sorry, username already taken!")
+        res.json({
+          error: "Sorry, username already taken!"
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.send(error);
     }
+  }
 }
 
 module.exports = UserController;

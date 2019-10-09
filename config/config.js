@@ -9,7 +9,8 @@ module.exports = {
     database: process.env.DEVELOPMENT_DB_DATABASE,
     host: process.env.DEVELOPMENT_DB_HOST,
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: false, //fixes security warning
+    logging: false
   },
   test: {
     username: "postgres_test",
@@ -17,7 +18,7 @@ module.exports = {
     database: "discogs-player_test",
     host: "127.0.0.1",
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: false //fixes security warning
   },
   production: {
     username: process.env.PRODUCTION_DB_USERNAME,
@@ -26,6 +27,7 @@ module.exports = {
     host: process.env.PRODUCTION_DB_HOST,
     URI: process.env.PRODUCTION_DATABASE_URL,
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: false, //fixes security warning
+    logging: false
   }
 };
