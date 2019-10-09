@@ -2,17 +2,12 @@ const config = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser")
 const path = require("path");
-// const recordRoutes = require('./routes/RecordRoutes');
 const db = require("./models");
+const routes = require('./routes');
 
 const morgan = require("morgan");
 const session = require("express-session");
 const cors = require("cors");
-
-// import config from 'dotenv';
-// import express from 'express';
-// import bodyParser from 'body-parser';
-// import recordRoutes from './routes/RecordRoutes';
 
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
@@ -31,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // //set up routes
-// app.use('/api/v1/records', recordRoutes);
+app.use(routes);
 
 const PORT = process.env.PORT || 5000;
 
