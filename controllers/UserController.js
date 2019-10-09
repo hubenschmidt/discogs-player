@@ -9,7 +9,7 @@ class UserController {
   static async testWithoutService(req, res) {
     try {
       if (req) {
-        util.setSuccess(200, "POST /api/user test", {data: "test data"});
+        util.setSuccess(200, "POST /api/user test", "test data");
       }
       return util.send(res);
     } catch (error) {
@@ -19,19 +19,14 @@ class UserController {
   }
 
   static async findOrCreate(req, res) {
-    console.log("user signup");
     const { username, password } = req.body;
-
     try {
       const createdOrFoundUser = await UserService.findOrCreate({
         where: { username: username },
         defaults: { password: password }
       });
-      if (!createdOrFoundUser) {
-        console.log("Sorry, username already taken!");
-        res.json({
-          error: "Sorry, username already taken!"
-        });
+      if (createdOrFoundUser) {
+        util.setSuccess(200, "POST /api/user test", { data: "createdOrFoundUser" });
       }
     } catch (error) {
       console.log(error);

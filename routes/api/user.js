@@ -4,7 +4,7 @@ const router = require("express").Router();
 const UserController = require("../../controllers/UserController");
 
 //matches with /api/user
-router.post('/', UserController.testWithoutService)
+router.post('/test', UserController.testWithoutService)
 
 // router.get('/', RecordController.getAllRecords);
 // router.post('/', RecordController.addRecord);
