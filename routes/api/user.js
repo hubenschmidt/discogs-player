@@ -5,6 +5,7 @@ const UserController = require("../../controllers/UserController");
 
 //matches with /api/user
 router.post('/test', UserController.testWithoutService)
+router.post('/', UserController.findOrCreate)
 
 // router.get('/', RecordController.getAllRecords);
 // router.post('/', RecordController.addRecord);
