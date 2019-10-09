@@ -52,7 +52,8 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   store: myStore,
   resave: false,
-  proxy: true
+  proxy: true,
+  saveUninitialized: false
 }))
 
 function extendDefaultFields(defaults, session){
