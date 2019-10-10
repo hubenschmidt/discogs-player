@@ -11,14 +11,6 @@ class UserService {
       throw error;
     }
   }
-  // static async findOrCreate(user) {
-  //   try {
-
-  //     return db.User.create(user);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 }
 
 module.exports = UserService;

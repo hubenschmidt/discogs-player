@@ -25,7 +25,6 @@ class UserController {
   static async findOrCreate(req, res) {
     const { name, email, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
-    console.log(errors, isValid);
 
     //check validation
     if (!isValid) {
