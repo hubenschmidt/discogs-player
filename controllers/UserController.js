@@ -61,18 +61,16 @@ class UserController {
   }
 
   static userLogin(req, res) {
-    console.log(req.user)
-    
-    // try {
-    //   const userInfo = {
-    //     username: req.user.username
-    //   };
-    //   util.setSuccess(201, "User logged in!", userInfo);
-    //   return util.send(userInfo);
-    // } catch (error) {
-    //   util.setError(400, error);
-    //   return util.send(res);
-    // }
+    try {
+      const userInfo = {
+        username: req.user.username
+      };
+      util.setSuccess(201, "User logged in!", userInfo);
+      return util.send(userInfo);
+    } catch (error) {
+      util.setError(400, error);
+      return util.send(res);
+    }
   }
 }
 
