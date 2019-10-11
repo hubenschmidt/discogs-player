@@ -2,10 +2,15 @@
 
 const router = require("express").Router();
 const UserController = require("../../controllers/UserController");
+const passport = require("../../config/passport");
+console.log(passport)
 
 //matches with /api/user
 router.post('/test', UserController.testWithoutService)
 router.post('/register', UserController.findOrCreate)
+router.post('/login', passport.authenticate("local"), UserController.userLogin)
+// router.post('/login', UserController.userLogin)
+// router.post('/login', UserController.)
 
 // router.get('/', RecordController.getAllRecords);
 // router.post('/', RecordController.addRecord);
