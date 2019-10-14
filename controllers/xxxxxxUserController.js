@@ -1,7 +1,7 @@
 // controllers/UserController.js
 
-const UserService = require("../services/UserService");
-const Util = require("../utils/Utils");
+const UserService = require("../services/xxxxxxxxUserService");
+const Util = require("../utils/xxxxxxxxxUtils");
 
 const util = new Util();
 
@@ -63,8 +63,6 @@ class UserController {
   }
 
   static userLogin(req, res) {
-    console.log(req.user.email)
-    // res.send(req.user.email)
     try {
       const userInfo = {
         email: req.user.email
