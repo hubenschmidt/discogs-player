@@ -23,8 +23,10 @@ class UserController {
   }
 
   static async findOrCreate(req, res) {
-    const { name, email, password } = req.body;
+    // const { name, email, password } = req.body;
+    const { email, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
+  
 
     //check validation
     if (!isValid) {
@@ -33,7 +35,8 @@ class UserController {
     }
 
     //if required field is blank
-    if (!name || !email || !password) {
+    // if (!name || !email || !password) {
+      if (!email || !password) {
       util.setError(400, "Please provide complete details");
       return util.send(res);
     }
@@ -43,10 +46,11 @@ class UserController {
       const createdOrFoundUser = await UserService.findOrCreate({
         where: { email: email },
         defaults: {
-          name: name,
+          // name: name,
           password: password
         }
       });
+
       if (createdOrFoundUser[1] === true) {
         util.setSuccess(201, "User Added!", createdOrFoundUser);
         return util.send(res);
@@ -61,13 +65,16 @@ class UserController {
   }
 
   static userLogin(req, res) {
+    console.log(req.user)
+ 
     try {
       const userInfo = {
-        username: req.user.username
+        email: req.user.email
       };
       util.setSuccess(201, "User logged in!", userInfo);
       return util.send(userInfo);
     } catch (error) {
+      console.log(error)
       util.setError(400, error);
       return util.send(res);
     }
