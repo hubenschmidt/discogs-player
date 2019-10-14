@@ -26,6 +26,7 @@ module.exports = class Util {
         message: this.message,
         data: this.data,
       };
+     
   
       if (this.type === 'success') {
         return res.status(this.statusCode).json(result);

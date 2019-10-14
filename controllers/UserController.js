@@ -66,18 +66,16 @@ class UserController {
 
   static userLogin(req, res) {
 
-    ////WRITE USER LOGIN AND CONNECT TO SERVICE HERE 
+
     try {
       const userInfo = {
         email: req.user.email
       };
-      console.log(userInfo)
       util.setSuccess(201, "User logged in!", userInfo);
-      return util.send(userInfo);
-    } catch (error) {
+      return util.send(res);
+    } catch (error) { 
       util.setError(400, error);
       return util.send(res);
-
     }
   }
 }
