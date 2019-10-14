@@ -7,7 +7,7 @@ const util = new Util();
 
 // load input validation
 const validateRegisterInput = require("../validation/register");
-// const validateLoginInput = require("../validation/login");
+const validateLoginInput = require("../validation/login");
 
 class UserController {
   static async testWithoutService(req, res) {
@@ -49,7 +49,6 @@ class UserController {
           password: password
         }
       });
-
       if (createdOrFoundUser[1] === true) {
         util.setSuccess(201, "User Added!", createdOrFoundUser);
         return util.send(res);
@@ -63,33 +62,21 @@ class UserController {
     }
   }
 
-//   static userLogin(req, res) {
-//     //  console.log("logged in", req.user);
-//     try {
-//       const userInfo = {
-//         email: req.user.email
-//       };
-//       util.setSuccess(201, "User logged in!", userInfo);
-//       return util.send(res);
-//     } catch (error) {
-//       util.setError(400, error);
-//       return util.send(res);
-//     }
-//   }
-// }
-
-static userLogin(req, res) {
-  //  console.log("logged in", req.user);
-  // const { email, password } = req.body;
-  // const { errors, isValid } = validateLoginInput(req.body);
-
-    const userInfo = {
-      email: req.user.email
-    };
-    util.setSuccess(201, "User logged in!", userInfo);
-    return util.send(res);
-
-}
+  static userLogin(req, res) {
+    console.log(req.user.email)
+    // res.send(req.user.email)
+    try {
+      const userInfo = {
+        email: req.user.email
+      };
+      util.setSuccess(201, "User logged in!", userInfo);
+      return util.send(res);
+    } 
+    catch (error) {
+      util.setError(400, error);
+      return util.send(res);
+    }
+  }
 }
 
 module.exports = UserController;

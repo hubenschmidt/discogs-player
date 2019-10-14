@@ -10,8 +10,14 @@ router.post('/test', UserController.testWithoutService)
 router.post('/register', UserController.findOrCreate)
 router.post('/login', passport.authenticate("local"), UserController.userLogin)
 // router.post('/login', passport.authenticate("local"), function(req, res){
-//     res.json('works');
-// })
+
+//     var userInfo = {
+//         email: req.user.email
+//       };
+//       res.send(userInfo);
+
+//     }
+// )
 
 // router.post('/login', UserController.)
 
