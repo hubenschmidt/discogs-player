@@ -1,7 +1,7 @@
 // controllers/UserController.js
 
-const UserService = require("../services/xxxxxxxxUserService");
-const Util = require("../utils/xxxxxxxxxUtils");
+const UserService = require("../services/UserService");
+const Util = require("../utils/Utils");
 
 const util = new Util();
 
@@ -59,14 +59,14 @@ class UserController {
     }
   }
 
-  static getUser(req, res) {
-    console.log("===== current user!!======");
-    if (req.user) {
-      res.json({ user: req.user });
-    } else {
-      res.json({ user: null });
-    }
-  }
+  // static getUser(req, res) {
+  //   console.log("===== current user!!======");
+  //   if (req.user) {
+  //     res.json({ user: req.user });
+  //   } else {
+  //     res.json({ user: null });
+  //   }
+  // }
 
   static userLogin(req, res) {
     try {
