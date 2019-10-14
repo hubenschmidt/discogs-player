@@ -2,46 +2,23 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const passport = require("../config/passport");
+const userController = require("../controllers/UserController")
 
-router.post("/register", (req, res) => {
-  console.log("user signup");
-  const { email, password } = req.body;
+router.post("/register", userController.findOrCreate)
+router.post("/login", passport.authenticate('local'), userController.userLogin)
 
-  // ADD VALIDATION
-  db.User.findOrCreate({
-    where: { email: email },
-    defaults: { password: password }
-  }).then(([user, created]) => {
-    if (!created) {
-      console.log("user created:", created);
-      res.json({
-        error: `Sorry, already a user with the email: ${email}`
-      });
-    } else if (created) {
-      console.log(
-        user.get({
-          plain: true
-        })
-      );
-      res.json({ user });
-    }
-  });
-});
-
-
-
-router.post(
-  "/login",
-  passport.authenticate("local"),
-  (req, res) => {
-    console.log("logged in", req.user);
-    var userInfo = {
-      email: req.user.email
-    };
-    res.send(userInfo);
-    // console.log(userInfo, 'userinfo')
-  }
-);
+// router.post(
+//   "/login",
+//   passport.authenticate("local"),
+//   (req, res) => {
+//     console.log("logged in", req.user);
+//     var userInfo = {
+//       email: req.user.email
+//     };
+//     res.send(userInfo);
+//     // console.log(userInfo, 'userinfo')
+//   }
+// );
 
 router.get("/", (req, res, next) => {
   console.log("===== user!!======");
