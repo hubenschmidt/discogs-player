@@ -69,6 +69,14 @@ class UserController {
   // }
 
   static userLogin(req, res) {
+
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     try {
       const userInfo = {
         email: req.user.email

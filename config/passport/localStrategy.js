@@ -11,7 +11,7 @@ const strategy = new LocalStrategy(
     db.User.findOne({ where: { email: email } })
       .then(user => {
         if (!user) {
-          return done(null, false, { message: "Incorrect email" });
+          return done(null, false, { message: "Incorrect email" }); 
         }
         if (!user.validPassword(password)) {
           return done(null, false, { message: "Incorrect password" });
