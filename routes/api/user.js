@@ -9,6 +9,9 @@ const passport = require("../../config/passport")
 router.post('/test', UserController.testWithoutService)
 router.post('/register', UserController.findOrCreate)
 router.post('/login', passport.authenticate("local"), UserController.userLogin)
+// router.post('/login', passport.authenticate("local"), function(req, res){
+//     res.json('works');
+// })
 
 // router.post('/login', UserController.)
 

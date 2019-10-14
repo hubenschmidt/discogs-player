@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     expires: DataTypes.DATE,
-    data: DataTypes.STRING(255)
+    data: DataTypes.STRING
   });
 
   return Session;

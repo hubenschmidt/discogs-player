@@ -7,7 +7,7 @@ const util = new Util();
 
 // load input validation
 const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
+// const validateLoginInput = require("../validation/login");
 
 class UserController {
   static async testWithoutService(req, res) {
@@ -26,7 +26,6 @@ class UserController {
     // const { name, email, password } = req.body;
     const { email, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
-  
 
     //check validation
     if (!isValid) {
@@ -36,7 +35,7 @@ class UserController {
 
     //if required field is blank
     // if (!name || !email || !password) {
-      if (!email || !password) {
+    if (!email || !password) {
       util.setError(400, "Please provide complete details");
       return util.send(res);
     }
@@ -55,7 +54,7 @@ class UserController {
         util.setSuccess(201, "User Added!", createdOrFoundUser);
         return util.send(res);
       } else {
-        util.setSuccess(201, "User Found!", createdOrFoundUser);
+        util.setSuccess(201, "User Already Exists!", createdOrFoundUser);
         return util.send(res);
       }
     } catch (error) {
@@ -64,20 +63,33 @@ class UserController {
     }
   }
 
-  static userLogin(req, res) {
+//   static userLogin(req, res) {
+//     //  console.log("logged in", req.user);
+//     try {
+//       const userInfo = {
+//         email: req.user.email
+//       };
+//       util.setSuccess(201, "User logged in!", userInfo);
+//       return util.send(res);
+//     } catch (error) {
+//       util.setError(400, error);
+//       return util.send(res);
+//     }
+//   }
+// }
 
+static userLogin(req, res) {
+  //  console.log("logged in", req.user);
+  // const { email, password } = req.body;
+  // const { errors, isValid } = validateLoginInput(req.body);
 
-    try {
-      const userInfo = {
-        email: req.user.email
-      };
-      util.setSuccess(201, "User logged in!", userInfo);
-      return util.send(res);
-    } catch (error) { 
-      util.setError(400, error);
-      return util.send(res);
-    }
-  }
+    const userInfo = {
+      email: req.user.email
+    };
+    util.setSuccess(201, "User logged in!", userInfo);
+    return util.send(res);
+
+}
 }
 
 module.exports = UserController;

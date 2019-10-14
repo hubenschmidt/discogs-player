@@ -2,7 +2,6 @@
 
 const db = require("../models");
 
-
 class UserService {
   static async findOrCreate(user){
     try{
