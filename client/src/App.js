@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-import LoginForm from "./components/Auth/Login.js";
+import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
-// import Signup from "./components/sign-up";
+import Register from "./components/Auth/Register";
 import Dashboard from "./pages/Dashboard";
 // import Grid from "@material-ui/core/Grid";
 // import Box from "@material-ui/core/Box";
@@ -75,14 +75,13 @@ class App extends Component {
           />
         )}
 
-
         {/* Routes to different components */}
         <Route
           exact
           path="/login"
-          render={() => <LoginForm updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>}
+          render={() => <Login updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>}
         />
-        {/* <Route path="/register" render={() => <Signup />} /> */}
+        <Route path="/register" render={() => <Register />} />
 
       </Paper>
       </div>
@@ -99,7 +98,6 @@ class App extends Component {
             <Route exact path="/login" component={AdminContainer} />
             <Route exact path="/register" component={AdminContainer} />
             <Route exact path="/reports" component={AdminContainer} />
-            {/* <Route exact path="/survey" component={FinancialWellnessSurvey} /> */}
           </Switch>
         </Router>
       </div>
