@@ -23,19 +23,19 @@ class UserController {
   }
 
   static async findOrCreate(req, res) {
-    console.log('pinged from client')
-    console.log(req.body)
-    const { email, password } = req.body;
+    console.log(req.body, 'findorCreate')
+    const { email, password, password2 } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
 
     //check validation
     if (!isValid) {
       util.setError(400, errors);
-      return util.send(res);
+      // return util.send(res);
+      console.log(errors)
     }
 
     //if required field is blank
-    if (!email || !password) {
+    if (!email || !password || !password2 )  {
       util.setError(400, "Please provide complete details");
       return util.send(res);
     }

@@ -32,7 +32,7 @@ class Register extends Component {
     //     email: this.state.email,
     //     password: this.state.password
     //   }
-    API.registerUser({ email: this.state.email, password: this.state.password })
+    API.registerUser({ email: this.state.email, password: this.state.password, password2: this.state.password2 })
       .then(response => {
         if (!response.data.errmsg) {
           // console.log('successful signup')
@@ -109,7 +109,7 @@ class Register extends Component {
                       value={this.state.password2}
                       onChange={this.handleChange}
                     />
-                    <label htmlFor="password">Confirm password</label>
+                    <label htmlFor="password2">Confirm password</label>
                   </div>
                 </div>
 
