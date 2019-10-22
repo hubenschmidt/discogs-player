@@ -61,14 +61,15 @@ class UserController {
     }
   }
 
-  // static getUser(req, res) {
-  //   console.log("===== current user!!======");
-  //   if (req.user) {
-  //     res.json({ user: req.user });
-  //   } else {
-  //     res.json({ user: null });
-  //   }
-  // }
+  static getUser(req, res) {
+    console.log("===== current user!!======");
+    console.log(req.user)
+    if (req.user) {
+      res.json({ user: req.user });
+    } else {
+      res.json({ user: null });
+    }
+  }
 
   static userLogin(req, res) {
 

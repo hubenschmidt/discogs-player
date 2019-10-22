@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-// import API from "../utils/API";
+import API from "../utils/API"
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
@@ -48,13 +48,13 @@ class Dashboard extends Component {
     this.isAuthenticated();
   }
 
-  // isAuthenticated = () => {
-  //   API.getUser().then(res =>
-  //     this.setState({
-  //       user: res.data.user
-  //     })
-  //   );
-  // };
+  isAuthenticated = () => {
+    API.getUser().then(res =>
+      this.setState({
+        user: res.data.user
+      })
+    );
+  };
 
   render() {
     if (!this.state.user) {

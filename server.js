@@ -79,9 +79,9 @@ if (process.env.NODE_ENV === "production") {
 // });
 
 // when a random route is inputed
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to this API.',
-}));
+// app.get('*', (req, res) => res.status(200).send({
+//   message: 'Welcome to this API.',
+// }));
 
 // app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')));
 

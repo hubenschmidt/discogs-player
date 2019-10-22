@@ -7,7 +7,6 @@ export default {
   },
 
   loginUser: function(userData) {
-    console.log(userData, "API loginUser method");
     return axios.post("api/user/login", userData);
   },
   //Gets the current user logged in

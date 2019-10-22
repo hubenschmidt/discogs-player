@@ -11,7 +11,7 @@ router.get("/test", userController.testWithoutService);
 router.post("/", userController.findOrCreate)
 
 // // matches with api/user
-// router.get("/", userController.getUser);
+router.get("/", userController.getUser);
 
 // matches with /api/user/login
 router.post("/login", passport.authenticate("local"), userController.userLogin);
