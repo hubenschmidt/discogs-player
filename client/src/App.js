@@ -4,10 +4,9 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import LoginForm from "./components/Auth/Login.js";
 import Navbar from "./components/Navbar";
-import Signup from "./components/sign-up";
+import Landing from "./components/Landing";
+// import Signup from "./components/sign-up";
 import Dashboard from "./pages/Dashboard";
-import Detail from "./pages/Detail";
-import Reports from "./pages/Reports";
 // import Grid from "@material-ui/core/Grid";
 // import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -68,16 +67,14 @@ class App extends Component {
           component={Dashboard} />
         )}
 
-        {/* show reports if logged in: */}
-        {this.state.loggedIn && <Route path="/reports" component={Reports} />}
-
         {/* redirect to login page if not logged in: */}
         {!this.state.loggedIn && (
           <Route
-            path="/customers/:id"
+            path="/dashboard"
             render={() => <Redirect to="/login" />}
           />
         )}
+
 
         {/* Routes to different components */}
         <Route
@@ -85,8 +82,8 @@ class App extends Component {
           path="/login"
           render={() => <LoginForm updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>}
         />
-        <Route path="/register" render={() => <Signup />} />
-        <Route exact path="/customers/:id" component={Detail} />
+        {/* <Route path="/register" render={() => <Signup />} /> */}
+
       </Paper>
       </div>
     );
@@ -95,7 +92,8 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/login" />} />
+            {/* <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
+            <Route exact path="/" component={Landing} />
             <Route exact path="/dashboard" component={AdminContainer} />
             <Route exact path="/customers/:id" component={AdminContainer} />
             <Route exact path="/login" component={AdminContainer} />

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
+import "../../App.css"
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -42,6 +42,7 @@ class Navbar extends Component {
     return (
       <Fragment>
         <header className="navbar App-header" id="nav-container">
+
           {loggedIn ? (
             <section className="navbar-section">
               <Link
@@ -55,16 +56,19 @@ class Navbar extends Component {
                 <span className="text-secondary">dashboard</span>
               </Link>
             </section>
-          ) : (
+          ) 
+          : (
             <section className="navbar-section">
-              <Link to="/login" className="btn btn-link text-secondary">
+              <h1>user not logged in</h1>
+              {/* <Link to="/login" className="btn btn-link text-secondary">
                 <span className="text-secondary">login</span>
-              </Link>
+              </Link> */}
               {/* <Link to="/register" className="btn btn-link">
                 <span className="text-secondary">register</span>
               </Link> */}
             </section>
-          )}
+          )
+          }
         </header>
       </Fragment>
     );
