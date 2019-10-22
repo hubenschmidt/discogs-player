@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export default {
-
-    // //Gets the current user logged in
+    //Gets the current user logged in
     // getUser: function(){
-    //     return axios.get("/user")
+    //     return axios.get("api/user")
     // }
 }

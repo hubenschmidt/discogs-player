@@ -20,10 +20,6 @@ config.config();
 //express app
 const app = express();
 
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 5000;
@@ -38,12 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 
-// when a random route is inputed
-// app.get('*', (req, res) => res.status(200).send({
-//   message: 'Welcome to this API.',
-// }));
 
-// app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')));
 
 //sessions
 const myStore = new SequelizeStore({
@@ -76,11 +67,23 @@ app.use(passport.session()) // calls the deserializer
 // //set up routes
 app.use(routes);
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // Send every request to the React app
 // Define any API routes before this runs
 // app.get("*", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 // });
+
+// when a random route is inputed
+app.get('*', (req, res) => res.status(200).send({
+  message: 'Welcome to this API.',
+}));
+
+// app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')));
 
 db.sequelize.sync().then(function(){
   app.listen(PORT, function() {

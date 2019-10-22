@@ -27,7 +27,7 @@ class Register extends Component {
 
     //request to server to add a new username/password
     axios
-      .post("/user/", {
+      .post("/api/user/", {
         email: this.state.email,
         password: this.state.password
       })

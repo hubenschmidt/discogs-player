@@ -7,8 +7,13 @@ const userController = require("../../controllers/UserController")
 // matches with /api/user/test
 router.get("/test", userController.testWithoutService)
 
+// // matches with /api/user
+// router.post("/", userController.findOrCreate)
+
 // matches with /api/user
-router.post("/", userController.findOrCreate)
+router.post("/", (req, res) =>{
+    console.log('/api/user POST route working')
+})
 
 // // matches with api/user
 // router.get("/", userController.getUser);
