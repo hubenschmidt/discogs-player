@@ -59,7 +59,8 @@ class Login extends Component {
       .then(response => {
         console.log("login response: ");
         console.log(response, "login res");
-        if (response.status == 200) {
+        if (response.status == 200 || 201) {
+          console.log('updating updateUser props')
           // update App.js state
           this.props.updateUser({
             loggedIn: true,
