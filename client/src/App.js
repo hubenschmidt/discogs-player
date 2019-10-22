@@ -58,7 +58,7 @@ class App extends Component {
         <Paper>
         <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
         {/* greet user if logged in: */}
-        {/* {this.state.loggedIn && <p>You are logged in as, {this.state.username}!</p>} */}
+        {this.state.loggedIn && <p>You are logged in as, {this.state.username}!</p>}
 
         {/* show dashboard if logged in: */}
         {this.state.loggedIn && (
