@@ -13,7 +13,7 @@ class UserController {
   static async testWithoutService(req, res) {
     try {
       if (req) {
-        util.setSuccess(200, "POST /api/user test", "test data");
+        util.setSuccess(200, "/api/user test", "test data");
       }
       return util.send(res);
     } catch (error) {
@@ -23,6 +23,7 @@ class UserController {
   }
 
   static async findOrCreate(req, res) {
+    console.log('pinged from client')
     const { email, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
 

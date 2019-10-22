@@ -16,7 +16,7 @@ class App extends Component {
     super();
     this.state = {
       loggedIn: false,
-      username: null
+      email: null
     };
 
     this.getUser = this.getUser.bind(this);
@@ -40,13 +40,13 @@ class App extends Component {
 
         this.setState({
           loggedIn: true,
-          username: response.data.user.username
+          email: response.data.user.email
         });
       } else {
         console.log("Get user: no user");
         this.setState({
           loggedIn: false,
-          username: null
+          email: null
         });
       }
     });
@@ -58,7 +58,7 @@ class App extends Component {
         <Paper>
         <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
         {/* greet user if logged in: */}
-        {this.state.loggedIn && <p>You are logged in as, {this.state.username}!</p>}
+        {this.state.loggedIn && <p>You are logged in as, {this.state.email}!</p>}
 
         {/* show dashboard if logged in: */}
         {this.state.loggedIn && (
@@ -94,10 +94,8 @@ class App extends Component {
             {/* <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
             <Route exact path="/" component={Landing} />
             <Route exact path="/dashboard" component={AdminContainer} />
-            <Route exact path="/customers/:id" component={AdminContainer} />
             <Route exact path="/login" component={AdminContainer} />
             <Route exact path="/register" component={AdminContainer} />
-            <Route exact path="/reports" component={AdminContainer} />
           </Switch>
         </Router>
       </div>

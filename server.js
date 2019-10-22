@@ -39,9 +39,11 @@ app.use(cors());
 
 
 // when a random route is inputed
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to this API.',
-}));
+// app.get('*', (req, res) => res.status(200).send({
+//   message: 'Welcome to this API.',
+// }));
+
+// app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')));
 
 //sessions
 const myStore = new SequelizeStore({

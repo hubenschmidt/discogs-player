@@ -3,9 +3,6 @@ import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { withStyles } from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 //styling
 const styles = theme => ({
