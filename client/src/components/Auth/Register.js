@@ -68,9 +68,7 @@ class Register extends Component {
             <div className="SignupForm">
               <form className="form-horizontal">
                 <div className="form-group">
-                  <div className="col-1 col-ml-auto">
-
-                  </div>
+                  <div className="col-1 col-ml-auto"></div>
                   <div className="input-field col s12">
                     <input
                       className="form-input"
@@ -84,9 +82,7 @@ class Register extends Component {
                   </div>
                 </div>
                 <div className="form-group">
-                  <div className="col-1 col-ml-auto">
-   
-                  </div>
+                  <div className="col-1 col-ml-auto"></div>
                   <div className="input-field col s12">
                     <input
                       className="form-input"
@@ -101,9 +97,7 @@ class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <div className="col-1 col-ml-auto">
-
-                  </div>
+                  <div className="col-1 col-ml-auto"></div>
                   <div className="input-field col s12">
                     <input
                       className="form-input"
@@ -117,8 +111,6 @@ class Register extends Component {
                   </div>
                 </div>
 
-
-
                 <div className="form-group ">
                   <button
                     className="btn btn-primary col-1 col-mr-auto"
@@ -130,8 +122,6 @@ class Register extends Component {
                 </div>
               </form>
             </div>
-
-            
           </div>
         </div>
       </div>
