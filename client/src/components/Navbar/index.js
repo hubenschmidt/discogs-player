@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import "../../App.css"
 import axios from "axios";
+import API from "../../utils/API";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
@@ -18,10 +19,9 @@ class Navbar extends Component {
   logout(event) {
     event.preventDefault();
     console.log("logging out");
-    axios
-      .post("/user/logout")
+    API.logoutUser()
       .then(response => {
-        if (response.status === 200) {
+        if (response.status == 200 || 201) {
           this.props.updateUser({
             loggedIn: false,
             username: null
@@ -59,7 +59,6 @@ class Navbar extends Component {
           ) 
           : (
             <section className="navbar-section">
-              <h1>user not logged in</h1>
               {/* <Link to="/login" className="btn btn-link text-secondary">
                 <span className="text-secondary">login</span>
               </Link> */}

@@ -7,10 +7,14 @@ export default {
   },
 
   loginUser: function(userData) {
-    return axios.post("api/user/login", userData);
+    return axios.post("/api/user/login", userData);
+  },
+
+  logoutUser: function(){
+    return axios.post("/api/user/logout")
   },
   //Gets the current user logged in
   getUser: function(){
-      return axios.get("api/user")
+      return axios.get("/api/user")
   }
 };
