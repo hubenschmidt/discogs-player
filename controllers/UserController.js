@@ -24,6 +24,7 @@ class UserController {
 
   static async findOrCreate(req, res) {
     console.log('pinged from client')
+    console.log(req.body)
     const { email, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
 

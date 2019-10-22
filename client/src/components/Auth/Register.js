@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API from "../../utils/API";
 
 class Register extends Component {
   constructor() {
@@ -25,12 +26,13 @@ class Register extends Component {
     // console.log(this.state.username)
     event.preventDefault();
 
-    //request to server to add a new username/password
-    axios
-      .post("/api/user/", {
-        email: this.state.email,
-        password: this.state.password
-      })
+    // //request to server to add a new username/password
+    // axios
+    //   .post("/api/user/", {
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   }
+    API.registerUser({ email: this.state.email, password: this.state.password })
       .then(response => {
         if (!response.data.errmsg) {
           // console.log('successful signup')
@@ -43,7 +45,7 @@ class Register extends Component {
         }
       })
       .catch(error => {
-        // console.log('signup error: ')
+        console.log(error, "signup error: ");
       });
   }
 
