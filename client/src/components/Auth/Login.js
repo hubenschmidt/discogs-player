@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
@@ -8,22 +9,22 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 //styling
 const styles = theme => ({
-  root: {
-    backgroundColor: "#ECECEC",
-    minHeight: "50vh",
-    justifyContent: "center",
-    marginTop: "20px"
-  },
-  login: {
-    marginTop: "20px",
-    marginRight: "40px"
-  },
-  paper: {
-    padding: "2px",
-    textAlign: "left",
-    color: "grey",
-    backgroundColor: "#6CBF77"
-  }
+  // root: {
+  //   backgroundColor: "#ECECEC",
+  //   minHeight: "50vh",
+  //   justifyContent: "center",
+  //   marginTop: "20px"
+  // },
+  // login: {
+  //   marginTop: "20px",
+  //   marginRight: "40px"
+  // },
+  // paper: {
+  //   padding: "2px",
+  //   textAlign: "left",
+  //   color: "grey",
+  //   backgroundColor: "#6CBF77"
+  // }
 });
 
 class Login extends Component {
@@ -85,66 +86,67 @@ class Login extends Component {
       return <Redirect to="/dashboard" />;
     } else {
       return (
-        <Fragment>
-          <CssBaseline />
-          <Container>
-            <Grid container className={classes.root}>
-              <Grid item xs={3} sm={3} className={classes.login}>
-                <div className="login-card mls
-                t-5">
-                  <div className="card-body">
-                    <form onSubmit={this.handleSubmit}>
-                      <div className="input-group form-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="fas fa-user"></i>
-                          </span>
-                        </div>
-                        <input
-                          onChange={this.handleChange}
-                          value={this.state.username}
-                          name="username"
-                          type="username"
-                          className="form-control"
-                          placeholder="username"
-                        />
-                      </div>
-                      <div className="input-group form-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="fas fa-key"></i>
-                          </span>
-                        </div>
-                        <input
-                          onChange={this.handleChange}
-                          value={this.state.password}
-                          name="password"
-                          type="password"
-                          minlength="8"
-                          className="form-control"
-                          placeholder="password"
-                          required
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="submit"
-                          value="Login"
-                          className="btn login_btn float-right"
-                          style={{
-                            borderColor: "#2faa3f",
-                            color: "#2faa3f",
-                            marginRight: "50px"
-                          }}
-                        />
-                      </div>
-                    </form>
+        <div className="container">
+        <div className="row">
+          <div className="col s8 offset-s2">
+            <Link to="/" className="btn flat waves-effect">
+              <i className="material-icons left">keyboard_backspace</i> Back to
+              home
+            </Link>
+            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              <h4>
+                <b>Login</b> below
+              </h4>
+              <p className="grey-text text-darken-1">
+                Don't have an account? <Link to="/register">Register</Link>
+              </p>
+            </div>
+
+            <div className="SignupForm">
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <div className="col-1 col-ml-auto"></div>
+                  <div className="input-field col s12">
+                    <input
+                      className="form-input"
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                    />
+                    <label htmlFor="email">Email</label>
                   </div>
                 </div>
-              </Grid>
-            </Grid>
-          </Container>
-        </Fragment>
+                <div className="form-group">
+                  <div className="col-1 col-ml-auto"></div>
+                  <div className="input-field col s12">
+                    <input
+                      className="form-input"
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                    />
+                    <label htmlFor="password">Password</label>
+                  </div>
+                </div>
+
+                <div className="form-group ">
+                  <button
+                    className="btn btn-primary col-1 col-mr-auto"
+                    onClick={this.handleSubmit}
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       );
     }
   }
