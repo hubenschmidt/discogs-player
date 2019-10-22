@@ -13,12 +13,6 @@ router.post("/", userController.findOrCreate)
 // // matches with api/user
 // router.get("/", userController.getUser);
 
-// matches with api/user
-// router.get("/", (req, res) => {
-//   res.send("user route works");
-//   console.log("user route working");
-// });
-
 // matches with /api/user/login
 router.post("/login", passport.authenticate("local"), userController.userLogin);
 

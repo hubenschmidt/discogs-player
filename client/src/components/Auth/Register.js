@@ -25,13 +25,6 @@ class Register extends Component {
     // console.log('sign-up handleSubmit, username: ')
     // console.log(this.state.username)
     event.preventDefault();
-
-    // //request to server to add a new username/password
-    // axios
-    //   .post("/api/user/", {
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   }
     API.registerUser({ email: this.state.email, password: this.state.password, password2: this.state.password2 })
       .then(response => {
         if (!response.data.errmsg) {

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import API from "../../utils/API"
 import axios from "axios";
 import { withStyles } from "@material-ui/styles";
 
@@ -54,11 +55,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios
-      .post("/user/login", {
-        username: this.state.username,
-        password: this.state.password
-      })
+    API.loginUser({ email: this.state.email, password: this.state.password})
       .then(response => {
         console.log("login response: ");
         console.log(response, "login res");
@@ -66,7 +63,7 @@ class Login extends Component {
           // update App.js state
           this.props.updateUser({
             loggedIn: true,
-            username: response.data.username
+            email: response.data.email
           });
         }
       })

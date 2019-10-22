@@ -48,13 +48,13 @@ class Dashboard extends Component {
     this.isAuthenticated();
   }
 
-//   isAuthenticated = () => {
-//     API.getUser().then(res =>
-//       this.setState({
-//         user: res.data.user
-//       })
-//     );
-//   };
+  // isAuthenticated = () => {
+  //   API.getUser().then(res =>
+  //     this.setState({
+  //       user: res.data.user
+  //     })
+  //   );
+  // };
 
   render() {
     if (!this.state.user) {
