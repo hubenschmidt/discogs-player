@@ -10,9 +10,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 
 import io from "socket.io-client";
-import OAuth from "../components/OAuth"
-// import { API_URL } from "../config";
-// const socket = io(API_URL);
+import OAuth from "../components/OAuth";
+import { API_URL } from "../utils/OAuthConfig.js";
+
+const socket = io(API_URL);
 const providers = ["discogs"];
 
 //styling
@@ -46,11 +47,20 @@ const styles = theme => ({
 
 class Dashboard extends Component {
   state = {
-    user: {}
+    user: {},
+    loading: true
   };
 
   componentWillMount() {
     this.isAuthenticated();
+  }
+
+  componentDidMount() {
+    fetch(`${API_URL}/wake-up`).then(res => {
+      if (res.ok) {
+        this.setState({ loading: false });
+      }
+    });
   }
 
   isAuthenticated = () => {
@@ -62,14 +72,16 @@ class Dashboard extends Component {
   };
 
   render() {
+    const buttons = (providers, socket) =>
+      providers.map(provider => (
+        <OAuth provider={provider} key={provider} socket={socket} />
+      ));
+
     if (!this.state.user) {
       return <Redirect to={{ pathname: "/login" }} />;
     } else {
       return (
         <div style={{ height: "75vh" }} className="container valign-wrapper">
-          {providers.map(provider => (
-            <OAuth provider={provider} key={provider} socket={socket} />
-          ))}
           <div className="row">
             <div className="landing-copy col s12 center-align">
               <h4>
@@ -81,6 +93,8 @@ class Dashboard extends Component {
                   app. Would you like to authorize discogs?
                 </p>
               </h4>
+              {/* authorize discogs button */}
+              {this.state.loading ? <Loading /> : buttons(providers, socket)}
             </div>
           </div>
         </div>
