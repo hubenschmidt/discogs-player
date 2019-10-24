@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { API_URL } from "../config";
+import PropTypes from "prop-types";
+import FontAwesome from "react-fontawesome";
+import { API_URL } from "../../utils/OAuthConfig";
 
 export default class OAuth extends Component {
   state = {
@@ -51,14 +53,15 @@ export default class OAuth extends Component {
   // Kicks off the processes of opening the popup on the server and listening
   // to the popup. It also disables the login button so the user can not
   // attempt to login to the provider twice.
-  startAuth(e) {
+  startAuth = () => {
+    // startAuth(e) {
     if (!this.state.disabled) {
-      e.preventDefault();
+      // e.preventDefault();
       this.popup = this.openPopup();
       this.checkPopup();
       this.setState({ disabled: "disabled" });
     }
-  }
+  };
 
   closeCard() {
     this.setState({ user: {} });
@@ -70,21 +73,23 @@ export default class OAuth extends Component {
     const { name, photo } = this.state.user;
     const { provider } = this.props;
     const { disabled } = this.state;
+    const atSymbol = provider === "discogs" ? "@" : "";
 
     return (
       <div>
         {name ? (
-          <div className={"card"}>
+          <div className="card">
             <img src={photo} alt={name} />
             <FontAwesome
               name={"times-circle"}
               className={"close"}
-              onClick={this.closeCard.bind(this)}
+              // onClick={this.closeCard.bind(this)}
+              onClick={this.closeCard}
             />
-            <h4>{name}</h4>
+            <h4>{`${atSymbol}${name}`}</h4>
           </div>
         ) : (
-          <div className={"button-wrapper fadein-fast"}>
+          <div className="button-wrapper fadein-fast">
             <button
               onClick={this.startAuth.bind(this)}
               className={`${provider} ${disabled} button`}
@@ -97,3 +102,8 @@ export default class OAuth extends Component {
     );
   }
 }
+
+OAuth.propTypes = {
+  provider: PropTypes.string.isRequired,
+  socket: PropTypes.object.isRequired
+};
