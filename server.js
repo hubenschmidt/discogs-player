@@ -11,6 +11,7 @@ const fs = require('fs')
 const https = require('https');
 const http = require('http');
 const socketio = require('socket.io');
+const server;
 
 
 // const passportInit = require('./lib/passport.init');
