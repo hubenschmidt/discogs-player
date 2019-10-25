@@ -7,6 +7,8 @@ const authController = require("../../controllers/AuthController");
 const discogsAuth = passport.authenticate("discogs");
 
 // routes that are triggered by the callbacks from each OAuth provider once the user has authenticated successfully.
+
+//matches with /auth/discogs/callback
 router.get("/discogs/callback", discogsAuth, authController.discogs);
 
 //this custom middleware allows us to attack the socket id to the session.
@@ -16,7 +18,7 @@ router.use((req, res, next) => {
   next();
 });
 
-// routes that are triggered on the client:
+// routes that are triggered on the client.
 // matches with /auth/discogs
 router.get('/discogs', discogsAuth);
 

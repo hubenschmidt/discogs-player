@@ -51,6 +51,8 @@
     "esm": "^3.2.25",
     "express": "^4.16.3",
     "express-session": "^1.16.2",
+    "http": "0.0.0",
+    "https": "^1.0.0",
     "if-env": "^1.0.4",
     "is-empty": "^1.2.0",
     "morgan": "^1.9.1",
@@ -62,6 +64,7 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.18.4",
+    "socket.io": "^2.3.0",
     "validator": "^11.1.0"
   }
 }

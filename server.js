@@ -7,6 +7,14 @@ const morgan = require("morgan");
 const session = require("express-session");
 const cors = require("cors");
 
+const fs = require('fs')
+const https = require('https');
+const http = require('http');
+const socketio = require('socket.io');
+
+
+// const passportInit = require('./lib/passport.init');
+
 // initalize sequelize with session store
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const cookieParser = require('cookie-parser')
@@ -32,7 +40,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   credentials: true,
 
+// }
+// app.use(cors(corsOptions));
+
+
+// If we are in production we are already running in https
+if (process.env.NODE_ENV === 'production') {
+  server = http.createServer(app)
+}
+// We are not in production so load up our certificates to be able to 
+// run the server in https mode locally
+else {
+  const certOptions = {
+    key: fs.readFileSync(path.resolve('certs/key.pem')),
+    // key: fs.readFileSync(path.resolve('certs/server.key')),
+    cert: fs.readFileSync(path.resolve('certs/certificate.pem'))
+    // cert: fs.readFileSync(path.resolve('certs/server.crt'))
+  }
+  server = https.createServer(certOptions, app)
+}
 
 
 //sessions
@@ -83,6 +113,16 @@ if (process.env.NODE_ENV === "production") {
 // }));
 
 // app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')));
+
+// Connecting sockets to the server and adding them to the request 
+// so that we can access them later in the controller
+const io = socketio(server)
+app.set('io', io)
+
+// Catch a start up request so that a sleepy Heroku instance can  
+// be responsive as soon as possible
+app.get('/wake-up', (req, res) => res.send('👍'))
+
 
 db.sequelize.sync().then(function(){
   app.listen(PORT, function() {
