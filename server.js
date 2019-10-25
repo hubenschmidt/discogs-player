@@ -7,7 +7,6 @@ const morgan = require("morgan");
 const session = require("express-session");
 const cors = require("cors");
 
-
 // initalize sequelize with session store
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const cookieParser = require('cookie-parser')
@@ -15,11 +14,11 @@ const cookieParser = require('cookie-parser')
 //requiring passport as configured
 const passport = require("./config/passport")
 
+//dotenv config
 config.config();
 
 //express app
 const app = express();
-
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 5000;
