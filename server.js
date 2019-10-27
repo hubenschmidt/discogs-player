@@ -59,6 +59,7 @@ else {
     cert: fs.readFileSync(path.resolve('certs/certificate.pem'))
     // cert: fs.readFileSync(path.resolve('certs/server.crt'))
   }
+  // console.log('certOptions', certOptions)
   server = https.createServer(certOptions, app)
 }
 
@@ -123,7 +124,8 @@ app.get('/wake-up', (req, res) => res.send('👍'))
 
 
 db.sequelize.sync().then(function(){
-  app.listen(PORT, function() {
+  // app.listen(PORT, function() {
+  server.listen(PORT, function() {
     console.log(`🌎 ==> API server now on port ${PORT}!`);
   });
 })
