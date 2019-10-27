@@ -8,6 +8,7 @@ export default class OAuth extends Component {
     user: {},
     disabled: ""
   };
+  
 
   componentDidMount() {
     const { socket, provider } = this.props;
@@ -93,9 +94,10 @@ export default class OAuth extends Component {
             <button
               // onClick={this.startAuth.bind(this)}
               onClick={this.startAuth}
-              className={`${provider} ${disabled} button`}
+              className={`${provider} ${disabled} btn btn-link text-secondary`}
             >
-              <FontAwesome name={provider} />
+              {/* <FontAwesome name={provider} /> */}
+              <span className="text-secondary">authorize discogs</span>
             </button>
           </div>
         )}
