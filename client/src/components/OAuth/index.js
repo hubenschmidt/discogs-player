@@ -91,7 +91,8 @@ export default class OAuth extends Component {
         ) : (
           <div className="button-wrapper fadein-fast">
             <button
-              onClick={this.startAuth.bind(this)}
+              // onClick={this.startAuth.bind(this)}
+              onClick={this.startAuth}
               className={`${provider} ${disabled} button`}
             >
               <FontAwesome name={provider} />

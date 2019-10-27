@@ -43,7 +43,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cors());
 
-app.use(cors({origin: CLIENT_ORIGIN}));
+// app.use(cors({origin: CLIENT_ORIGIN}));
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+}
+
+app.use(cors(corsOptions))
 
 
 // If we are in production we are already running in https
