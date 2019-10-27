@@ -5,13 +5,14 @@ const path = require("path");
 const db = require("./models");
 const morgan = require("morgan");
 const session = require("express-session");
+const { CLIENT_ORIGIN } = require("./config/oauth")
 const cors = require("cors");
 
 const fs = require('fs')
 const https = require('https');
 const http = require('http');
 const socketio = require('socket.io');
-const server;
+let server;
 
 
 // const passportInit = require('./lib/passport.init');
@@ -27,7 +28,8 @@ const passport = require("./config/passport")
 config.config();
 
 //express app
-const app = express();
+// const app = express();
+const app = new express();
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 5000;
@@ -39,14 +41,9 @@ const routes = require('./routes');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+// app.use(cors());
 
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-//   credentials: true,
-
-// }
-// app.use(cors(corsOptions));
+app.use(cors({origin: CLIENT_ORIGIN}));
 
 
 // If we are in production we are already running in https
