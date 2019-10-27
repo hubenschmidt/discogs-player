@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const authRoutes = require("./auth")
+const discogs = require("./discogs")
 
 // matches with /auth
-router.use("/", authRoutes);
+router.use("/", discogs);
 
 module.exports = router;

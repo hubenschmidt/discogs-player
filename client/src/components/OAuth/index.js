@@ -40,7 +40,7 @@ export default class OAuth extends Component {
       height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    const url = `${API_URL}/${provider}?socketId=${socket.id}`;
+    const url = `${API_URL}/auth/${provider}?socketId=${socket.id}`;
 
     return window.open(
       url,
@@ -84,7 +84,6 @@ export default class OAuth extends Component {
             <FontAwesome
               name={"times-circle"}
               className={"close"}
-              // onClick={this.closeCard.bind(this)}
               onClick={this.closeCard}
             />
             <h4>{`${atSymbol}${name}`}</h4>
