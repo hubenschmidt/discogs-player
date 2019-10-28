@@ -7,7 +7,10 @@ const { DISCOGS_CONFIG } = require("../oauth/index.js");
 // called on login, saves the id to session req.session.passport.user = {id:'..'}
 passport.serializeUser((user, done) => {
   // console.log("*** serializeUser called, user: ");
-  console.log(user); // the whole raw user object!
+  console.log('user object', user); // the whole raw user object!
+
+  //PERSIST USER OBJECT TO DATABASE HERE
+
   // console.log("---------");
   // done(null, { id: user.id });
   done(null, user)
