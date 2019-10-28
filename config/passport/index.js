@@ -14,9 +14,13 @@ passport.serializeUser((user, done) => {
 
 // user object attaches to the request as req.user
 passport.deserializeUser((id, done) => {
-  // console.log("DeserializeUser called", id.id);
-
-  db.User.findByPk(id.id).then(function(user) {
+  console.log("DeserializeUser called", id);
+  db.User.findAll({
+    where: { id: id.id },
+  }).then(function(user){
+    console.log('user id callback', user)
+  // db.User.findByPk(id.id).then(function(user) {
+  // .then(function(user) {
     if (user) {
       done(null, user.get());
     } else {
@@ -39,7 +43,7 @@ const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
 //  Use Strategies
 // passport.use('local-signup', LocalStrategy);
 
-passport.use(new DiscogsStrategy(DISCOGS_CONFIG, callback))
+passport.use(new DiscogsStrategy(DISCOGS_CONFIG, callback));
 passport.use(LocalStrategy);
 
 module.exports = passport;
