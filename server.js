@@ -83,7 +83,7 @@ app.use(session({
   store: myStore,
   resave: false,
   proxy: true,
-  saveUninitialized: false
+  saveUninitialized: false,
 }))
 
 function extendDefaultFields(defaults, session){
@@ -123,6 +123,7 @@ if (process.env.NODE_ENV === "production") {
 // so that we can access them later in the controller
 const io = socketio(server)
 app.set('io', io)
+
 
 // Catch a start up request so that a sleepy Heroku instance can  
 // be responsive as soon as possible

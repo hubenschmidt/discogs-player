@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       // userId: DataTypes.STRING,
       expires: DataTypes.DATE,
-      data: DataTypes.STRING(255)
+      data: DataTypes.STRING(1000)
     });
   
   

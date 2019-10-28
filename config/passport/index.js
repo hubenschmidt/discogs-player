@@ -38,7 +38,8 @@ const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
 
 //  Use Strategies
 // passport.use('local-signup', LocalStrategy);
-passport.use(LocalStrategy);
+
 passport.use(new DiscogsStrategy(DISCOGS_CONFIG, callback))
+passport.use(LocalStrategy);
 
 module.exports = passport;
