@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
   // console.log("*** serializeUser called, user: ");
   console.log('user object', user); // the whole raw user object!
 
-  //PERSIST USER OBJECT TO DATABASE HERE
+  //PERSIST USER OBJECT TO DATABASE HERE BY CHECKING USER MODEL FOR ORIGINAL LOGIN 
 
   // console.log("---------");
   // done(null, { id: user.id });

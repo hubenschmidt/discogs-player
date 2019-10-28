@@ -18,6 +18,15 @@ export default class OAuth extends Component {
       this.setState({ user });
     });
   }
+  componentDidUpdate() {
+    const { socket, provider } = this.props;
+
+    socket.on(provider, user => {
+      console.log(provider, user)
+      this.popup.close();
+      this.setState({ user });
+    });
+  }
 
   // Routinely checks the popup to re-enable the login button
   // if the user closes the popup without authenticating.
