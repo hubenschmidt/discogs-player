@@ -16,5 +16,6 @@ exports.CLIENT_ORIGIN =
 exports.DISCOGS_CONFIG = {
   consumerKey: process.env.DISCOGS_KEY,
   consumerSecret: process.env.DISCOGS_SECRET,
-  callbackURL: discogsURL
+  callbackURL: discogsURL,
+  passReqToCallback: true
 };

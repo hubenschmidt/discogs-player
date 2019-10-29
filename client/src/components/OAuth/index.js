@@ -5,28 +5,18 @@ import { API_URL } from "../../utils/OAuthConfig";
 
 export default class OAuth extends Component {
   state = {
-    user: {},
+    // user: {},
     disabled: ""
   };
-  
 
-  componentDidMount() {
-    const { socket, provider } = this.props;
+  // componentDidMount() {
+  //   const { socket, provider } = this.props;
 
-    socket.on(provider, user => {
-      this.popup.close();
-      this.setState({ user });
-    });
-  }
-  componentDidUpdate() {
-    const { socket, provider } = this.props;
-
-    socket.on(provider, user => {
-      console.log(provider, user)
-      this.popup.close();
-      this.setState({ user });
-    });
-  }
+  //   socket.on(provider, user => {
+  //     this.popup.close();
+  //     this.setState({ user });
+  //   });
+  // }
 
   // Routinely checks the popup to re-enable the login button
   // if the user closes the popup without authenticating.
@@ -44,12 +34,12 @@ export default class OAuth extends Component {
   // passes along the socket id so it can be used to send back user
   // data to the appropriate socket on the connected client.
   openPopup() {
-    const { provider, socket } = this.props;
+    const { provider } = this.props;
     const width = 600,
       height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    const url = `${API_URL}/auth/${provider}?socketId=${socket.id}`;
+    const url = `${API_URL}/auth/${provider}`;
 
     return window.open(
       url,
@@ -73,21 +63,21 @@ export default class OAuth extends Component {
     }
   };
 
-  closeCard() {
-    this.setState({ user: {} });
-  }
+  // closeCard() {
+  //   this.setState({ user: {} });
+  // }
 
   // render method to follow
 
   render() {
-    const { name, photo } = this.state.user;
+    // const { name, photo } = this.state.user;
     const { provider } = this.props;
     const { disabled } = this.state;
     const atSymbol = provider === "discogs" ? "@" : "";
 
     return (
       <div>
-        {name ? (
+        {/* {name ? (
           <div className="card">
             <img src={photo} alt={name} />
             <FontAwesome
@@ -100,15 +90,25 @@ export default class OAuth extends Component {
         ) : (
           <div className="button-wrapper fadein-fast">
             <button
-              // onClick={this.startAuth.bind(this)}
               onClick={this.startAuth}
               className={`${provider} ${disabled} btn btn-link text-secondary`}
             >
-              {/* <FontAwesome name={provider} /> */}
+              <FontAwesome name={provider} />
               <span className="text-secondary">authorize discogs</span>
             </button>
           </div>
-        )}
+        )} */}
+
+        <div className="button-wrapper fadein-fast">
+          <button
+            // onClick={this.startAuth.bind(this)}
+            onClick={this.startAuth}
+            className={`${provider} ${disabled} btn btn-link text-secondary`}
+          >
+            {/* <FontAwesome name={provider} /> */}
+            <span className="text-secondary">authorize discogs</span>
+          </button>
+        </div>
       </div>
     );
   }
