@@ -36,6 +36,9 @@ router.get("/discogs", function(req, res) {
   );
 });
 
+
+// matches with auth/discogs/identity
+// testing discogs authentication using token and secret
 router.get('/discogs/identity', function(req, res){
   var accessData = {
     method: 'oauth',
