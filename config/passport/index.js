@@ -1,8 +1,8 @@
 const passport = require("passport");
 const LocalStrategy = require("./localStrategy");
-const db = require("../../models");
-const { Strategy: DiscogsStrategy } = require("passport-discogs");
-const { DISCOGS_CONFIG } = require("../oauth/index.js");
+const DiscogsStrategy = require("./discogsStrategy");
+// const { Strategy: DiscogsStrategy } = require("passport-discogs");
+// const { DISCOGS_CONFIG } = require("../oauth/index.js");
 
 // called on login, saves the id to session req.session.passport.user = {id:'..'}
 passport.serializeUser((user, done) => {
@@ -11,10 +11,22 @@ passport.serializeUser((user, done) => {
 
   //PERSIST USER OBJECT TO DATABASE HERE BY CHECKING USER MODEL FOR ORIGINAL LOGIN 
 
-  // console.log("---------");
-  // done(null, { id: user.id });
-  done(null, user)
+//PERSIST USER OBJECT TO DATABASE HERE BY CHECKING USER MODEL FOR ORIGINAL LOGIN
+  if (user.provider === 'discogs') {
+    // save to database as passport user object:
 
+    //
+    //
+    console.log(user.provider)
+    done(null, user);
+    // done(null, user);
+  } else {
+    // console.log("---------");
+    // done(null, { id: user.id });
+    // serialize the entire object and put it inside the cookie used to track sessions
+    console.log(user.email)
+    done(null, user);
+  }
 });
 
 // user object attaches to the request as req.user
@@ -37,12 +49,13 @@ passport.deserializeUser((obj, cb) => cb(null, obj))
 
 //the callback that is invoked when an OAuth provider sends back user information. Normally, you would save the user to the database in this callback and it would be customized for each provider.
 
-const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
+// const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
 
 //  Use Strategies
 // passport.use('local-signup', LocalStrategy);
 
-passport.use(new DiscogsStrategy(DISCOGS_CONFIG, callback));
+// passport.use(new DiscogsStrategy(DISCOGS_CONFIG));
+passport.use(DiscogsStrategy);
 passport.use(LocalStrategy);
 
 module.exports = passport;
