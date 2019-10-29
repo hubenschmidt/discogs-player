@@ -36,6 +36,22 @@ router.get("/discogs", function(req, res) {
   );
 });
 
+router.get('/discogs/identity', function(req, res){
+  var accessData = {
+    method: 'oauth',
+    level: 2,
+    consumerKey: 'ucyQbMxfuVNEigpgyQrp',
+    consumerSecret: 'hJkdzVOPODpOErIWzhkKgUeBJDQlqAEt',
+    token: 'sHomdpCOzYUfxnLVlcFMgjEhHQQycrhKXUyrkJXW',
+    tokenSecret: 'fxGeqIjkMdpecPtxpiMghddaHyjGPNvQjADvnJaI'
+  }
+  var dis = new Discogs(accessData);
+
+	dis.getIdentity(function(err, data){
+		res.send(data);
+	});
+});
+
 
 
 module.exports = router;
