@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../../controllers/AuthController");
 const { DISCOGS_CONFIG } = require("../../config/oauth/index");
 const db = require("../../models");
-
 const Discogs = require("disconnect").Client;
 
-// the following nested get request handles discogs OAuth:
+// the following handles discogs OAuth:
 
 // routes that are triggered on the client.
 // matches with /auth/discogs
