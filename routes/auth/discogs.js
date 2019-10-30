@@ -40,8 +40,8 @@ router.get("/discogs", function(req, res) {
               where: { email: req.user.email }
             })
               .then(
-                res => console.log("updated record id: ", res),
-                res.json(res)
+                dbModel => console.log("updated record id: ", dbModel),
+                res.json(dbModel)
               )
               .catch(
                 err => console.log("error on update", err),
@@ -60,18 +60,22 @@ router.get("/discogs", function(req, res) {
 // matches with auth/discogs/identity
 // test discogs authentication using token and secret
 router.get("/discogs/identity", function(req, res) {
-  var accessData = {
-    method: "oauth",
-    level: 2,
-    consumerKey: "ucyQbMxfuVNEigpgyQrp",
-    consumerSecret: "hJkdzVOPODpOErIWzhkKgUeBJDQlqAEt",
-    token: "sHomdpCOzYUfxnLVlcFMgjEhHQQycrhKXUyrkJXW",
-    tokenSecret: "fxGeqIjkMdpecPtxpiMghddaHyjGPNvQjADvnJaI"
-  };
-  var dis = new Discogs(accessData);
-
-  dis.getIdentity(function(err, data) {
-    res.send(data);
+  //find user in database
+  db.User.findByPk(req.user.id).then(dbModel => {
+    //construct accessData object
+    var accessData = {
+      method: "oauth",
+      level: 2,
+      consumerKey: DISCOGS_CONFIG.consumerKey,
+      consumerSecret: DISCOGS_CONFIG.consumerSecret,
+      token: dbModel.token,
+      tokenSecret: dbModel.tokenSecret
+    };
+    //instantiate disconnect class to test identity
+    var dis = new Discogs(accessData);
+    dis.getIdentity(function(err, data) {
+      res.send(data);
+    });
   });
 });
 
