@@ -7,6 +7,7 @@ const db = require("../../models");
 const Discogs = require("disconnect").Client;
 
 // the following nested get request handles discogs OAuth:
+
 // routes that are triggered on the client.
 // matches with /auth/discogs
 router.get("/discogs", function(req, res) {
@@ -37,7 +38,17 @@ router.get("/discogs", function(req, res) {
             };
             db.User.update(updateValues, {
               where: { email: req.user.email }
-            }).then(res => console.log(res)).catch(err=>console.log(err));
+            })
+              .then(
+                res => console.log("updated record id: ", res),
+                res.json(res)
+              )
+              .catch(
+                err => console.log("error on update", err),
+                res.status(422).json(err)
+              );
+
+            //close popup window after request is complete.
             res.send("<script>window.close()</script>");
           }
         );
@@ -47,7 +58,7 @@ router.get("/discogs", function(req, res) {
 });
 
 // matches with auth/discogs/identity
-// testing discogs authentication using token and secret
+// test discogs authentication using token and secret
 router.get("/discogs/identity", function(req, res) {
   var accessData = {
     method: "oauth",
