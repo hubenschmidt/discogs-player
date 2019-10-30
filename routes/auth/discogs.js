@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../../controllers/AuthController");
 const { DISCOGS_CONFIG } = require("../../config/oauth/index");
+const db = require("../../models");
 
 const Discogs = require("disconnect").Client;
 
-// routes that are triggered on the client.
-// matches with /auth/discogs
-
+// the following nested get request handles discogs OAuth:
 // routes that are triggered on the client.
 // matches with /auth/discogs
 router.get("/discogs", function(req, res) {
@@ -22,7 +21,7 @@ router.get("/discogs", function(req, res) {
       console.log("request data here", requestData);
       res.redirect(requestData.authorizeUrl);
 
-      //matches with /auth/discogs/callback
+      // matches with /auth/discogs/callback
       // router.get("/discogs/callback", authController.discogs);
       router.get("/discogs/callback", function(req, res) {
         var oAuth = new Discogs(requestData).oauth();
@@ -32,6 +31,13 @@ router.get("/discogs", function(req, res) {
             // Persist "accessData" here for following OAuth calls
             console.log("accessData here", accessData);
             // res.send("Received access token!");
+            let updateValues = {
+              token: accessData.token,
+              tokenSecret: accessData.tokenSecret
+            };
+            db.User.update(updateValues, {
+              where: { email: req.user.email }
+            }).then(res => console.log(res)).catch(err=>console.log(err));
             res.send("<script>window.close()</script>");
           }
         );
