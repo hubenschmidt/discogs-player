@@ -9,6 +9,7 @@ const util = new Util();
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 
+//refactor to object literal module.exports = 
 class UserController {
   static async testWithoutService(req, res) {
     try {

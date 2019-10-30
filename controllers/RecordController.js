@@ -6,6 +6,7 @@ const Util = require("../utils/Utils");
 
 const util = new Util();
 
+//refactor to object literal module.exports = 
 class RecordController {
   static async getAllRecords(req, res) {
     try {
