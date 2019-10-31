@@ -25,24 +25,26 @@ async function getUserData (id) {
   };
 
 async function getUserCollection(userId) {
-  var userData = await getUserData(userId);
-  console.log("getUserData", userData);
+//   var userData = await getUserData(userId);
+ 
   // var accessData = userData
   //construct accessData from userData promise response====================-
 
-  var col = new Discogs(accessData).user().collection();
+//   var col = new Discogs(accessData).user().collection();
   return new Promise((resolve, reject) => {
+      
     try {
-      col.getReleases(
-        userData.discogsUserData.username,
-        0,
-        //configure to return entire paginated collection
-        { page: 1, per_page: 256 },
-        function(err, data) {
-          if (err) reject(err);
-          resolve(data ? data.releases : null);
-        }
-      );
+        resolve('testing promise')
+    //   col.getReleases(
+    //     userData.discogsUserData.username,
+    //     0,
+    //     //configure to return entire paginated collection
+    //     { page: 1, per_page: 256 },
+    //     function(err, data) {
+    //       if (err) reject(err);
+    //       resolve(data ? data.releases : null);
+    //     }
+    //   );
     } catch (e) {
       reject(e);
     }
@@ -52,8 +54,8 @@ async function getUserCollection(userId) {
 async function sync(req, res) {
   var userId = req.params._id;
   res.json(userId)
-  console.log(userId, "userID is here on discogsDatabase.js");
   var releases = await getUserCollection(userId);
+  console.log(releases, 'logging releases')
 //   await asyncForEach(releases, async release => {
 //     var releaseId = release.id;
 //     var existing = await dbFindOneByReleaseId(releaseId);
