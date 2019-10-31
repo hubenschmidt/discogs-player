@@ -17,15 +17,17 @@ async function test(req, res) {
 
 async function getUserData (id) {
     return new Promise((resolve, reject) => {
-      db.User.findByPk(id, function(err, doc) {
-        if (err) reject(err);
-        resolve(doc ? doc.toJSON() : undefined);
-      });
+        resolve('testing getUserData promise')
+    //   db.User.findByPk(id, function(err, doc) {
+    //     if (err) reject(err);
+    //     resolve(doc ? doc.toJSON() : undefined);
+    //   });
     });
   };
 
 async function getUserCollection(userId) {
-//   var userData = await getUserData(userId);
+  var userData = await getUserData(userId);
+  console.log(userData)
  
   // var accessData = userData
   //construct accessData from userData promise response====================-
@@ -34,7 +36,7 @@ async function getUserCollection(userId) {
   return new Promise((resolve, reject) => {
       
     try {
-        resolve('testing promise')
+        resolve('testing getUserCollection promise')
     //   col.getReleases(
     //     userData.discogsUserData.username,
     //     0,
