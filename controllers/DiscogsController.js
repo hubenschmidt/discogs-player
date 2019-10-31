@@ -2,14 +2,22 @@
 //after tests succeed, break into service/controller/model architecture
 const db = require("../models")
 
-class DiscogsController {
 
+module.exports = {
+    test: test,
+    getUserData: getUserData,
+    getUserCollection: getUserCollection,
+    syncUserReleases: syncUserReleases
+}
 //TEST AND REFACTOR==============
 
+async function test(req, res){
+    res.send('welcome to discogs api route')
+}
 
-  static async getUserData(id) {
+  async function getUserData(id) {
     return new Promise((resolve, reject) => {
-    
+
     //break this logic into service
       db.User.findByPk(id, function(err, doc) {
         if (err) reject(err);
@@ -18,7 +26,7 @@ class DiscogsController {
     });
   }
 
-  static async getUserCollection(userId) {
+  async function getUserCollection(userId) {
     var userData = await getUserData(userId);
     console.log('getUserData',userData)
     // var accessData = userData
@@ -44,7 +52,7 @@ class DiscogsController {
     });
   }
 
-  static async syncUserReleases(req, res)  {
+  async function syncUserReleases(req, res)  {
     console.log(userId, 'userID is here on discogsDatabase.js')
     var userId = req.params._id;
     var releases = await getUserCollection(userId);
@@ -75,7 +83,3 @@ class DiscogsController {
     });
     res.json(releases);
 }
-
-}
-
-module.exports = DiscogsController;
