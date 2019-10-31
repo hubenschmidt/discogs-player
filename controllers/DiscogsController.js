@@ -15,46 +15,45 @@ async function test(req, res) {
   res.send("welcome to discogs api route");
 }
 
-// async function getUserData(req, res) {
-//   return new Promise((resolve, reject) => {
-//     //break this logic into service
-//     db.User.findByPk(id, function(err, doc) {
-//       if (err) reject(err);
-//       resolve(doc ? doc.toJSON() : undefined);
-//     });
-//   });
-// }
+async function getUserData (id) {
+    return new Promise((resolve, reject) => {
+      db.User.findByPk(id, function(err, doc) {
+        if (err) reject(err);
+        resolve(doc ? doc.toJSON() : undefined);
+      });
+    });
+  };
 
-// async function getUserCollection(userId) {
-//   var userData = await getUserData(userId);
-//   console.log("getUserData", userData);
-//   // var accessData = userData
-//   //construct accessData from userData promise response====================-
+async function getUserCollection(userId) {
+  var userData = await getUserData(userId);
+  console.log("getUserData", userData);
+  // var accessData = userData
+  //construct accessData from userData promise response====================-
 
-//   var col = new Discogs(accessData).user().collection();
-//   return new Promise((resolve, reject) => {
-//     try {
-//       col.getReleases(
-//         userData.discogsUserData.username,
-//         0,
-//         //configure to return entire paginated collection
-//         { page: 1, per_page: 256 },
-//         function(err, data) {
-//           if (err) reject(err);
-//           resolve(data ? data.releases : null);
-//         }
-//       );
-//     } catch (e) {
-//       reject(e);
-//     }
-//   });
-// }
+  var col = new Discogs(accessData).user().collection();
+  return new Promise((resolve, reject) => {
+    try {
+      col.getReleases(
+        userData.discogsUserData.username,
+        0,
+        //configure to return entire paginated collection
+        { page: 1, per_page: 256 },
+        function(err, data) {
+          if (err) reject(err);
+          resolve(data ? data.releases : null);
+        }
+      );
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
 
 async function sync(req, res) {
   var userId = req.params._id;
   res.json(userId)
   console.log(userId, "userID is here on discogsDatabase.js");
-//   var releases = await getUserCollection(userId);
+  var releases = await getUserCollection(userId);
 //   await asyncForEach(releases, async release => {
 //     var releaseId = release.id;
 //     var existing = await dbFindOneByReleaseId(releaseId);
