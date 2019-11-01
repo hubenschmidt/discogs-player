@@ -30,21 +30,36 @@ router.get("/discogs", function(req, res) {
             // Persist "accessData" here for following OAuth calls
             console.log("accessData here", accessData);
             // res.send("Received access token!");
-            let updateValues = {
-              token: accessData.token,
-              tokenSecret: accessData.tokenSecret
-            };
-            db.User.update(updateValues, {
-              where: { email: req.user.email }
-            })
-              .then(
-                dbModel => console.log("updated record id: ", dbModel),
-                res.json(dbModel)
-              )
-              .catch(
-                err => console.log("error on update", err),
-                res.status(422).json(err)
-              );
+
+            //instantiate disconnect class to get identity.username
+            var dis = new Discogs(accessData);
+            dis.getIdentity(function(err, identity) {
+              let updateValues = {
+                token: accessData.token,
+                tokenSecret: accessData.tokenSecret,
+                discogsId: identity.id,
+                discogsUsername: identity.username
+              };
+              console.log(updateValues)
+              console.log(req.user.email)
+
+              db.User.update(updateValues, {
+                where: { email: req.user.email }
+              })
+                .then(
+                  dbModel => console.log("updated record id: ", dbModel),
+                  // res.json(dbModel)
+                )
+                .catch(
+                  err => console.log("error on update", err),
+                  // res.status(422).json(err)
+                );
+
+              // res.send(identity);
+              // return data;
+            });
+
+            // console.log(updateValues)
 
             //close popup window after request is complete.
             res.send("<script>window.close()</script>");

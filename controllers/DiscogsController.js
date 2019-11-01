@@ -2,6 +2,7 @@
 //after tests succeed, break into service/controller/model architecture
 const db = require("../models");
 const Discogs = require("disconnect").Client;
+const { DISCOGS_CONFIG } = require("../config/oauth/index");
 
 module.exports = {
   test: test,
@@ -33,7 +34,21 @@ async function getUserData(id) {
 
 async function getUserCollection(userId) {
   var userData = await getUserData(userId);
+
+  let accessData = {
+    method: "oauth",
+    level: 2,
+    consumerKey: DISCOGS_CONFIG.consumerKey,
+    consumerSecret: DISCOGS_CONFIG.consumerSecret,
+    token: userData.token,
+    tokenSecret: userData.tokenSecret
+  };
+
+
+
+
 //   console.log(userData, 'USER DATA HERE')
+
 
   //   const dis = new Discogs(accessData).database();
 
@@ -43,7 +58,7 @@ async function getUserCollection(userId) {
   //   var col = new Discogs(accessData).user().collection();
   return new Promise((resolve, reject) => {
     try {
-      resolve("testing getUserCollection promise");
+      resolve(userData);
       //   col.getReleases(
       //     userData.discogsUserData.username,
       //     0,
