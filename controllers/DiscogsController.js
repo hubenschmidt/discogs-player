@@ -49,7 +49,12 @@ async function getUserCollection(userId) {
 
   return new Promise((resolve, reject) => {
     try {
-      col.getReleases(userData.discogsUsername, 0, { page: 1, per_page: 2}, function(err, data) {
+      col.getReleases(userData.discogsUsername, 0, 
+
+
+        //default returns 50 results per page, max is 500
+        { page: 1, per_page: 500}, 
+        function(err, data) {
           resolve(console.log(data, "RELEASES"))
         // if (err) reject(err);
         // resolve(data ? data.releases: null)
