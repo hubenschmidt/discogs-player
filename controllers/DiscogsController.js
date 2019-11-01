@@ -40,32 +40,19 @@ async function paginateCollection(userData, pageNum) {
           //default returns 50 results per page, max is 500, make repeated API calls based on pagination.urls.last and .next until complete.
           // Get page 1 of discogsUsername's public collection showing 500 releases. The second param is the collection folder ID where 0 is always the "All" folder
         //   { page: 1, per_page: 500 },
-        { page: pageNum, per_page: 500 },
+        { page: pageNum, per_page: 200 },
           function(err, data) {
-              if (data.pagination.urls.next){
-                  var pages = paginateCollection(userData, pageNum++)
-                  resolve(data)
+              if (data.pagination.urls.next || data.pagination.urls.first){
+                 console.log(data)
+                //   paginateCollection(userData, pageNum++)
+                paginateCollection(userData, pageNum + 1)
               }
+
               if (data.pagination.urls.first){
                   resolve(data);
               }
-            
 
-
-
-            // TERMINATION
-            // if (pageNum < 0) return;
-
-            //   resolve(data);
-            //RECURSIVELY CALL FUNCTION BASED ON next page=
-            // //base
-
-            // //recursion
-            // if (data.pagination.urls.last){
-            //     return paginateCollection(userid, (pageNum + 1))
-            // }
-            // // if (err) reject(err);
-            // // resolve(data ? data.releases: null)
+              resolve(data)
           }
         );
       } catch (e) {
@@ -108,7 +95,7 @@ async function getUserCollection(userId) {
 
 //   //instantiate disconnect class to test identity
 //   var col = new Discogs(accessData).user().collection();
-  var coll = await paginateCollection(userData, 3);
+  var coll = await paginateCollection(userData, 1);
   console.log(coll)
 
   //   return new Promise((resolve, reject) => {
