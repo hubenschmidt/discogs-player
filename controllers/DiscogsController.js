@@ -20,12 +20,12 @@ async function test(req, res) {
 async function getUserData(id) {
   return new Promise((resolve, reject) => {
     try {
-        resolve(db.User.findByPk(id))
-    //   db.User.findByPk(id, function(err, dbModel) {
-    //     // if (err) reject(err);
-    //     resolve(dbModel)
-    //     // resolve(dbModel ? dbModel.toJSON() : undefined);
-    //   });
+      resolve(db.User.findByPk(id));
+      //   db.User.findByPk(id, function(err, dbModel) {
+      //     // if (err) reject(err);
+      //     resolve(dbModel)
+      //     // resolve(dbModel ? dbModel.toJSON() : undefined);
+      //   });
     } catch (e) {
       reject(e);
     }
@@ -44,14 +44,23 @@ async function getUserCollection(userId) {
     tokenSecret: userData.tokenSecret
   };
 
+  //instantiate disconnect class to test identity
+  var col = new Discogs(accessData).user().collection();
 
+  return new Promise((resolve, reject) => {
+    try {
+      col.getReleases(userData.discogsUsername, 0, { page: 1, per_page: 2}, function(err, data) {
+          resolve(console.log(data, "RELEASES"))
+        // if (err) reject(err);
+        // resolve(data ? data.releases: null)
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
 
-
-//   console.log(userData, 'USER DATA HERE')
-
-
+  //   console.log(userData, 'USER DATA HERE')
   //   const dis = new Discogs(accessData).database();
-
   // var accessData = userData
   //construct accessData from userData promise response====================-
 
