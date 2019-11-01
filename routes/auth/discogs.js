@@ -29,7 +29,6 @@ router.get("/discogs", function(req, res) {
           function(err, accessData) {
             // Persist "accessData" here for following OAuth calls
             console.log("accessData here", accessData);
-            // res.send("Received access token!");
 
             //instantiate disconnect class to get identity.username
             var dis = new Discogs(accessData);
@@ -40,27 +39,20 @@ router.get("/discogs", function(req, res) {
                 discogsId: identity.id,
                 discogsUsername: identity.username
               };
-              console.log(updateValues)
-              console.log(req.user.email)
 
+              //update postgres with discogs OAuth data
               db.User.update(updateValues, {
                 where: { email: req.user.email }
               })
                 .then(
-                  dbModel => console.log("updated record id: ", dbModel),
+                  dbModel => console.log("updated record id: ", dbModel)
                   // res.json(dbModel)
                 )
                 .catch(
-                  err => console.log("error on update", err),
+                  err => console.log("error on update", err)
                   // res.status(422).json(err)
                 );
-
-              // res.send(identity);
-              // return data;
             });
-
-            // console.log(updateValues)
-
             //close popup window after request is complete.
             res.send("<script>window.close()</script>");
           }
@@ -70,8 +62,8 @@ router.get("/discogs", function(req, res) {
   );
 });
 
+// test discogs authentication using token and secret:
 // matches with auth/discogs/identity
-// test discogs authentication using token and secret
 router.get("/discogs/identity", function(req, res) {
   //find user in database
   db.User.findByPk(req.user.id).then(dbModel => {
