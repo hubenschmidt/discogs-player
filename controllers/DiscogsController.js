@@ -29,6 +29,8 @@ async function paginateCollection(userData, pageNum) {
 
   return new Promise((resolve, reject) => {
     try {
+      let collArr = []
+
       col.getReleases(
         userData.discogsUsername,
         0,
@@ -38,30 +40,34 @@ async function paginateCollection(userData, pageNum) {
         function(err, data) {
           //recusively call function if url.next, increment page number
           if (data.pagination.urls.next) {
-
-              //persist data to database
-            // console.log(data);
-
-            // resolve(paginateCollection(userData, pageNum + 1));
-            resolve(data)
-   
-          
-
+            //persist data to database
+            
+            collArr.push(data)
+            resolve(paginateCollection(userData, pageNum + 1));
+            // resolve(data);
             //terminate recursion if url.first
           } else if (data.pagination.urls.first) {
-
-              //persist data to database
+            //persist data to database
             // console.log(data);
+            collArr.push(data)
             resolve(data);
           } else {
-            resolve();
+            collArr.push(data)
+            resolve(data);
             // return data.toJSON();
           }
         }
       );
+      console.log(collArr)
+
+      resolve(collArr)
+    
+
     } catch (e) {
       reject(e);
     }
+
+  
 
     // // TERMINATION
     // if (x < 0) return;
@@ -86,10 +92,10 @@ async function getUserData(id) {
 async function getUserCollection(userId) {
   var userData = await getUserData(userId);
 
-    // var coll = await paginateCollection(userData, 6);
-    // console.log(coll);
-  let paginatedCollection = await paginateCollection(userData, 1);
-//   console.log(paginatedCollection)
+  // var coll = await paginateCollection(userData, 6);
+  // console.log(coll);
+  let paginatedCollection = await paginateCollection(userData, 135);
+  //   console.log(paginatedCollection)
 
   return new Promise((resolve, reject) => {
     try {
@@ -103,9 +109,9 @@ async function getUserCollection(userId) {
 async function sync(req, res) {
   var userId = req.params._id;
   var releases = await getUserCollection(userId);
-  console.log(releases)
-//   console.log(releases)
-//   console.log(releases, "logging releases");
+  console.log(releases);
+  //   console.log(releases)
+  //   console.log(releases, "logging releases");
   //   await asyncForEach(releases, async release => {
   //     var releaseId = release.id;
   //     var existing = await dbFindOneByReleaseId(releaseId);
