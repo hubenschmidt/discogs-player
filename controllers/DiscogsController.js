@@ -14,7 +14,7 @@ async function test(req, res) {
   res.send("welcome to discogs api route");
 }
 
-async function paginateCollection(userData, pageNum) {
+async function paginateCollection(userData, pageNum, collArr) {
   // var userData = await getUserData(userId);
   let accessData = {
     method: "oauth",
@@ -29,7 +29,8 @@ async function paginateCollection(userData, pageNum) {
 
   return new Promise((resolve, reject) => {
     try {
-      let collArr = [];
+
+        let collArr = []
 
       col.getReleases(
         userData.discogsUsername,
@@ -38,30 +39,44 @@ async function paginateCollection(userData, pageNum) {
         // Get page 1 of discogsUsername's public collection showing 500 releases. The second param is the collection folder ID where 0 is always the "All" folder
         { page: pageNum, per_page: 10 },
         function(err, data) {
+
+            // let collArr = [];
+            // collArr.concat(data.releases);
+            //   collArr.push(data.releases);
+         
           //recusively call function if url.next, increment page number
           if (data.pagination.urls.next) {
-            //persist data to database
-            console.log(data.releases)
+              console.log(pageNum, 'next')
+            //persist data to databaseb
+            // console.log(data.releases)
 
+            // collArr.push(data.releases);
+           
+            // resolve(paginateCollection(userData, pageNum + 1));
+            // collArr.concat(data.releases);
             collArr.push(data.releases);
-            resolve(paginateCollection(userData, pageNum + 1));
+            paginateCollection(userData, pageNum + 1);
             // resolve(data);
             //terminate recursion if url.first
           } else if (data.pagination.urls.first) {
+            console.log(pageNum, 'last')
             //persist data to database
             // console.log(data);
             // collArr.push(data);
-            resolve(data);
+            // resolve(data, collArr);
+            resolve(collArr)
           } else {
             // collArr.push(data);
-            resolve(data);
+            resolve(collArr);
             // return data.toJSON();
           }
+
+        //   resolve(collArr)
         }
       );
-      console.log(collArr);
+      
 
-      resolve(collArr);
+    //   resolve(collArr);
     } catch (e) {
       reject(e);
     }
