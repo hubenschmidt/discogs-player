@@ -29,7 +29,7 @@ async function paginateCollection(userData, pageNum) {
 
   return new Promise((resolve, reject) => {
     try {
-      let collArr = []
+      let collArr = [];
 
       col.getReleases(
         userData.discogsUsername,
@@ -41,33 +41,30 @@ async function paginateCollection(userData, pageNum) {
           //recusively call function if url.next, increment page number
           if (data.pagination.urls.next) {
             //persist data to database
-            
-            collArr.push(data)
+            console.log(data.releases)
+
+            collArr.push(data.releases);
             resolve(paginateCollection(userData, pageNum + 1));
             // resolve(data);
             //terminate recursion if url.first
           } else if (data.pagination.urls.first) {
             //persist data to database
             // console.log(data);
-            collArr.push(data)
+            // collArr.push(data);
             resolve(data);
           } else {
-            collArr.push(data)
+            // collArr.push(data);
             resolve(data);
             // return data.toJSON();
           }
         }
       );
-      console.log(collArr)
+      console.log(collArr);
 
-      resolve(collArr)
-    
-
+      resolve(collArr);
     } catch (e) {
       reject(e);
     }
-
-  
 
     // // TERMINATION
     // if (x < 0) return;
