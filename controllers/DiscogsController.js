@@ -42,17 +42,40 @@ async function paginateCollection(userData, pageNum) {
         //   { page: 1, per_page: 500 },
         { page: pageNum, per_page: 200 },
           function(err, data) {
-              if (data.pagination.urls.next || data.pagination.urls.first){
-                 console.log(data)
-                //   paginateCollection(userData, pageNum++)
-                paginateCollection(userData, pageNum + 1)
-              }
 
-              if (data.pagination.urls.first){
-                  resolve(data);
-              }
+            if (data.pagination.urls.next){
+                console.log(data)
+                resolve(paginateCollection(userData, pageNum + 1))
+            } else if (data.pagination.urls.first){
+                console.log(data)
+                resolve();
+            } else {
+                resolve();
+            }
 
-              resolve(data)
+                // if (!pageNum){
+                //     resolve(false);
+                // } else {
+                //     console.log(data)
+                //     paginateCollection(userData, pageNum + 1)
+
+                // }           
+            //   if (data.pagination.urls.next || data.pagination.urls.first){
+            //     if (data.pagination.urls.next || data.pagination.urls.first){   
+            //      console.log(data)
+            //     //   paginateCollection(userData, pageNum++)
+            //     paginateCollection(userData, pageNum + 1)
+            //   }
+
+            //   if (data.pagination.urls.first){
+            //       resolve(data);
+            //   }
+
+            // if (!data.pagination.urls){
+            //     resolve();
+            // }
+
+            //   resolve(data)
           }
         );
       } catch (e) {
@@ -95,7 +118,7 @@ async function getUserCollection(userId) {
 
 //   //instantiate disconnect class to test identity
 //   var col = new Discogs(accessData).user().collection();
-  var coll = await paginateCollection(userData, 1);
+  var coll = await paginateCollection(userData, 6);
   console.log(coll)
 
   //   return new Promise((resolve, reject) => {
