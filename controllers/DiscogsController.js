@@ -40,9 +40,10 @@ async function paginateCollection(userData, pageNum, collArr) {
         { page: pageNum, per_page: 10 },
         function(err, data) {
 
-            // let collArr = [];
-            // collArr.concat(data.releases);
             //   collArr.push(data.releases);
+              collArr.push(pageNum, pageNum+1);
+  
+            
          
           //recusively call function if url.next, increment page number
           if (data.pagination.urls.next) {
@@ -51,32 +52,38 @@ async function paginateCollection(userData, pageNum, collArr) {
             // console.log(data.releases)
 
             // collArr.push(data.releases);
-           
+    
             // resolve(paginateCollection(userData, pageNum + 1));
             // collArr.concat(data.releases);
-            collArr.push(data.releases);
+            // collArr.push(data.releases);
+            // resolve(paginateCollection(userData, pageNum + 1));
             paginateCollection(userData, pageNum + 1);
+            // resolve(collArr);
             // resolve(data);
             //terminate recursion if url.first
-          } else if (data.pagination.urls.first) {
+          } 
+          if (!data.pagination.urls.next) {
+            console.log(data.pagination.urls)
             console.log(pageNum, 'last')
+            console.log(collArr, 'logging collArr')
             //persist data to database
             // console.log(data);
             // collArr.push(data);
             // resolve(data, collArr);
-            resolve(collArr)
-          } else {
-            // collArr.push(data);
-            resolve(collArr);
-            // return data.toJSON();
-          }
+            // resolve(collArr)
+          } 
+        //   else {
+        //     // collArr.push(data);
+        //     resolve(collArr);
+        //     // return data.toJSON();
+        //   }
 
-        //   resolve(collArr)
+        //   resolve(collArr);
         }
       );
       
 
-    //   resolve(collArr);
+      resolve(collArr);
     } catch (e) {
       reject(e);
     }
@@ -121,7 +128,7 @@ async function getUserCollection(userId) {
 async function sync(req, res) {
   var userId = req.params._id;
   var releases = await getUserCollection(userId);
-  console.log(releases);
+  console.log(releases, 'logging collArr from sync function');
   //   console.log(releases)
   //   console.log(releases, "logging releases");
   //   await asyncForEach(releases, async release => {
