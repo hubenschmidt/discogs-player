@@ -14,7 +14,15 @@ async function test(req, res) {
   res.send("welcome to discogs api route");
 }
 
-async function paginateCollection(userData, pageNum, collArr) {
+function copy(obj) {
+    var cp = {};
+    for (var o in obj) {
+        cp[o] = obj[o];
+    }
+    return cp;
+  }
+
+async function paginateCollection(userData, pageNum) {
   // var userData = await getUserData(userId);
   let accessData = {
     method: "oauth",
@@ -27,74 +35,47 @@ async function paginateCollection(userData, pageNum, collArr) {
   //instantiate disconnect class to test identity
   var col = new Discogs(accessData).user().collection();
 
+  
+
   return new Promise((resolve, reject) => {
+
+    let collArr = [];
+    
     try {
 
-        let collArr = []
-
+    //   let collArr = [];
       col.getReleases(
         userData.discogsUsername,
         0,
-        //default returns 50 results per page, max is 500, make repeated API calls based on pagination.urls.last and .next until complete.
-        // Get page 1 of discogsUsername's public collection showing 500 releases. The second param is the collection folder ID where 0 is always the "All" folder
         { page: pageNum, per_page: 10 },
         function(err, data) {
-
-            //   collArr.push(data.releases);
-              collArr.push(pageNum, pageNum+1);
-  
-            
-         
-          //recusively call function if url.next, increment page number
+        //   // call function if url.next, increment page number
           if (data.pagination.urls.next) {
-              console.log(pageNum, 'next')
-            //persist data to databaseb
-            // console.log(data.releases)
 
-            // collArr.push(data.releases);
-    
-            // resolve(paginateCollection(userData, pageNum + 1));
-            // collArr.concat(data.releases);
-            // collArr.push(data.releases);
-            // resolve(paginateCollection(userData, pageNum + 1));
+            let pageData = copy(data.releases)
+            collArr.push(pageData)
+            console.log(collArr)
+            console.log(pageNum, "next");
             paginateCollection(userData, pageNum + 1);
-            // resolve(collArr);
-            // resolve(data);
-            //terminate recursion if url.first
-          } 
-          if (!data.pagination.urls.next) {
-            console.log(data.pagination.urls)
-            console.log(pageNum, 'last')
-            console.log(collArr, 'logging collArr')
-            //persist data to database
-            // console.log(data);
-            // collArr.push(data);
-            // resolve(data, collArr);
-            // resolve(collArr)
-          } 
-        //   else {
-        //     // collArr.push(data);
-        //     resolve(collArr);
-        //     // return data.toJSON();
-        //   }
 
-        //   resolve(collArr);
+          } else if (!data.pagination.urls.next) {
+            let pageData = copy(data.releases)
+            collArr.concat(pageData)
+            console.log(collArr)
+            console.log(pageNum, "last");
+
+          } else {
+            resolve(collArr);  
+          }
+
+        resolve(collArr);
         }
       );
-      
 
-      resolve(collArr);
     } catch (e) {
       reject(e);
     }
 
-    // // TERMINATION
-    // if (x < 0) return;
-    // // BASE
-    // if (x === 0) return 1;
-    // // RECURSION
-    // return x * factorial(x - 1);
-    //   }
   });
 }
 
@@ -128,7 +109,9 @@ async function getUserCollection(userId) {
 async function sync(req, res) {
   var userId = req.params._id;
   var releases = await getUserCollection(userId);
-  console.log(releases, 'logging collArr from sync function');
+
+  console.log(releases, "logging collArr from sync function");
+
   //   console.log(releases)
   //   console.log(releases, "logging releases");
   //   await asyncForEach(releases, async release => {
