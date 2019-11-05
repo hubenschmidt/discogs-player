@@ -15,14 +15,14 @@ async function test(req, res) {
 }
 
 function copy(obj) {
-    var cp = {};
-    for (var o in obj) {
-        cp[o] = obj[o];
-    }
-    return cp;
+  var cp = {};
+  for (var o in obj) {
+    cp[o] = obj[o];
   }
+  return cp;
+}
 
-async function paginateCollection(userData, pageNum) {
+async function paginateCollection(userData, pageNum, collection = []) {
   // var userData = await getUserData(userId);
   let accessData = {
     method: "oauth",
@@ -35,48 +35,62 @@ async function paginateCollection(userData, pageNum) {
   //instantiate disconnect class to test identity
   var col = new Discogs(accessData).user().collection();
 
+  return new Promise((resolve, reject) => {
+    col
+      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 10 })
+      .then(data => {
+            collection = collection.concat(data.releases);
+
+            if (data.pagination.urls.next) {
+              try {
+                resolve(paginateCollection(userData, pageNum + 1, collection));
+              } catch (e) {
+                reject(e);
+              }
+            } else {
+              resolve(collection);
+            }
+          }).catch(err => reject(err));
   
 
-  return new Promise((resolve, reject) => {
 
-    let collArr = [];
-    
-    try {
+    // let collArr = [];
 
-    //   let collArr = [];
-      col.getReleases(
-        userData.discogsUsername,
-        0,
-        { page: pageNum, per_page: 10 },
-        function(err, data) {
-        //   // call function if url.next, increment page number
-          if (data.pagination.urls.next) {
+    // try {
 
-            let pageData = copy(data.releases)
-            collArr.push(pageData)
-            console.log(collArr)
-            console.log(pageNum, "next");
-            paginateCollection(userData, pageNum + 1);
+    // //   let collArr = [];
+    //   col.getReleases(
+    //     userData.discogsUsername,
+    //     0,
+    //     { page: pageNum, per_page: 10 },
+    //     function(err, data) {
+    //     //   // call function if url.next, increment page number
+    //       if (data.pagination.urls.next) {
 
-          } else if (!data.pagination.urls.next) {
-            let pageData = copy(data.releases)
-            collArr.concat(pageData)
-            console.log(collArr)
-            console.log(pageNum, "last");
+    //         let pageData = copy(data.releases)
+    //         collArr.push(pageData)
+    //         console.log(collArr)
+    //         console.log(pageNum, "next");
+    //         paginateCollection(userData, pageNum + 1);
 
-          } else {
-            resolve(collArr);  
-          }
+    //       } else if (!data.pagination.urls.next) {
+    //         let pageData = copy(data.releases)
+    //         collArr.concat(pageData)
+    //         console.log(collArr)
+    //         console.log(pageNum, "last");
 
-        resolve(collArr);
-        }
-      );
+    //       } else {
+    //         resolve(collArr);
+    //       }
 
-    } catch (e) {
-      reject(e);
-    }
+    //     resolve(collArr);
+    //     }
+    //   )
 
-  });
+    // } catch (e) {
+    //   reject(e);
+    // }
+  })
 }
 
 async function getUserData(id) {
