@@ -37,60 +37,22 @@ async function paginateCollection(userData, pageNum, collection = []) {
 
   return new Promise((resolve, reject) => {
     col
-      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 10 })
+      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 2 })
       .then(data => {
-            collection = collection.concat(data.releases);
+        collection = collection.concat(data.releases);
 
-            if (data.pagination.urls.next) {
-              try {
-                resolve(paginateCollection(userData, pageNum + 1, collection));
-              } catch (e) {
-                reject(e);
-              }
-            } else {
-              resolve(collection);
-            }
-          }).catch(err => reject(err));
-  
-
-
-    // let collArr = [];
-
-    // try {
-
-    // //   let collArr = [];
-    //   col.getReleases(
-    //     userData.discogsUsername,
-    //     0,
-    //     { page: pageNum, per_page: 10 },
-    //     function(err, data) {
-    //     //   // call function if url.next, increment page number
-    //       if (data.pagination.urls.next) {
-
-    //         let pageData = copy(data.releases)
-    //         collArr.push(pageData)
-    //         console.log(collArr)
-    //         console.log(pageNum, "next");
-    //         paginateCollection(userData, pageNum + 1);
-
-    //       } else if (!data.pagination.urls.next) {
-    //         let pageData = copy(data.releases)
-    //         collArr.concat(pageData)
-    //         console.log(collArr)
-    //         console.log(pageNum, "last");
-
-    //       } else {
-    //         resolve(collArr);
-    //       }
-
-    //     resolve(collArr);
-    //     }
-    //   )
-
-    // } catch (e) {
-    //   reject(e);
-    // }
-  })
+        if (data.pagination.urls.next) {
+          try {
+            resolve(paginateCollection(userData, pageNum + 1, collection));
+          } catch (e) {
+            reject(e);
+          }
+        } else {
+          resolve(collection);
+        }
+      })
+      .catch(err => reject(err));
+  });
 }
 
 async function getUserData(id) {
@@ -108,7 +70,7 @@ async function getUserCollection(userId) {
 
   // var coll = await paginateCollection(userData, 6);
   // console.log(coll);
-  let paginatedCollection = await paginateCollection(userData, 135);
+  let paginatedCollection = await paginateCollection(userData, 686);
   //   console.log(paginatedCollection)
 
   return new Promise((resolve, reject) => {
@@ -125,6 +87,19 @@ async function sync(req, res) {
   var releases = await getUserCollection(userId);
 
   console.log(releases, "logging collArr from sync function");
+
+  //bulk upsert to database as JSONB data
+
+  // when dashboard is rendered, bulk upsert static list into Category table
+
+  db.Collection.bulkCreate(
+    releases,
+    {
+      updateOnDuplicate: ["id"]
+    }
+  ).then(dbModel => console.log(dbModel))
+
+  //return res.json
 
   //   console.log(releases)
   //   console.log(releases, "logging releases");
