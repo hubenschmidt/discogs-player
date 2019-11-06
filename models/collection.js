@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   const Collection = sequelize.define("Collection", {
-    collection: {
-      type: DataTypes.JSONB
+    instance_id: {
+      type: DataTypes.STRING
     }
   });
   return Collection;
