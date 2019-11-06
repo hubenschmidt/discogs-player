@@ -94,7 +94,8 @@ async function sync(req, res) {
 
   db.Collection.bulkCreate(
     releases,
-    {
+    { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
+      fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
       updateOnDuplicate: ["id"]
     }
   ).then(dbModel => console.log(dbModel))
