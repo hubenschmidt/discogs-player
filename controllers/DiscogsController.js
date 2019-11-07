@@ -86,7 +86,13 @@ async function sync(req, res) {
   var userId = req.params._id;
   var releases = await getUserCollection(userId);
 
-  console.log(releases[0].basic_information, "logging collArr from sync function");
+  // console.log(releases[0].basic_information, "logging collArr from sync function");
+
+  releases.map(release=>{
+    console.log(release.basic_information.id, 'logging release map')
+  })
+
+
 
   //bulk upsert to database as JSONB data
 
