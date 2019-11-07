@@ -86,19 +86,19 @@ async function sync(req, res) {
   var userId = req.params._id;
   var releases = await getUserCollection(userId);
 
-  console.log(releases, "logging collArr from sync function");
+  console.log(releases[0].basic_information, "logging collArr from sync function");
 
   //bulk upsert to database as JSONB data
 
   // when dashboard is rendered, bulk upsert static list into Category table
 
-  db.Collection.bulkCreate(
-    releases,
-    { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
-      fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
-      updateOnDuplicate: ["id"]
-    }
-  ).then(dbModel => console.log(dbModel))
+  // db.Release.bulkCreate(
+  //   releases,
+  //   { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
+  //     fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
+  //     updateOnDuplicate: ["id"]
+  //   }
+  // ).then(dbModel => console.log(dbModel))
 
   //return res.json
 
