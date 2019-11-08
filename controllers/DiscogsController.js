@@ -37,7 +37,7 @@ async function paginateCollection(userData, pageNum, collection = []) {
 
   return new Promise((resolve, reject) => {
     col
-      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 2 })
+      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 1 })
       .then(data => {
         collection = collection.concat(data.releases);
 
@@ -70,7 +70,7 @@ async function getUserCollection(userId) {
 
   // var coll = await paginateCollection(userData, 6);
   // console.log(coll);
-  let paginatedCollection = await paginateCollection(userData, 686);
+  let paginatedCollection = await paginateCollection(userData, 1380);
   //   console.log(paginatedCollection)
 
   return new Promise((resolve, reject) => {
@@ -88,23 +88,24 @@ async function sync(req, res) {
 
   // console.log(releases[0].basic_information, "logging collArr from sync function");
 
-  releases.map(release=>{
-    console.log(release.basic_information.id, 'logging release map')
+  let releaseModel = releases.map(release=>{
+    return release.basic_information;
+    // console.log(release.basic_information, 'logging release map')
   })
-
-
 
   //bulk upsert to database as JSONB data
 
   // when dashboard is rendered, bulk upsert static list into Category table
 
-  // db.Release.bulkCreate(
-  //   releases,
-  //   { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
-  //     fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
-  //     updateOnDuplicate: ["id"]
-  //   }
-  // ).then(dbModel => console.log(dbModel))
+  db.Release.bulkCreate(
+    releaseModel,
+    { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
+      // fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
+      updateOnDuplicate: ["id"]
+    }
+  )
+  // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
+  .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
 
   //return res.json
 

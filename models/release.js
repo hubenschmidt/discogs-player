@@ -17,17 +17,20 @@ module.exports = function(sequelize, DataTypes) {
         autoIncrement: true
 
       },
-      labels: DataTypes.ARRAY(DataTypes.STRING),
+    //   labels: DataTypes.ARRAY(DataTypes.STRING),
+      labels: DataTypes.JSON,
       year: DataTypes.INTEGER,
       master_url: {
         type: DataTypes.STRING,
         allowNull: true
       },
-      artists: DataTypes.ARRAY(DataTypes.STRING),
+      artists: DataTypes.JSON,
+    //   artists: DataTypes.ARRAY(DataTypes.STRING),
       id: DataTypes.INTEGER,
       thumb: DataTypes.STRING,
       title: DataTypes.STRING,
-      formats: DataTypes.ARRAY(DataTypes.STRING),
+      formats: DataTypes.JSON,
+    //   formats: DataTypes.ARRAY(DataTypes.STRING),
       cover_image: DataTypes.STRING,
       resource_url: DataTypes.STRING,
       master_id: DataTypes.INTEGER
