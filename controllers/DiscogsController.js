@@ -88,14 +88,14 @@ async function sync(req, res) {
 
   // console.log(releases[0].basic_information, "logging collArr from sync function");
 
+  console.log(releases)
+
   let releaseModel = releases.map(release=>{
-    console.log(release.basic_information, 'logging release map')
+    // console.log(release.basic_information, 'logging release map')
     return release.basic_information;
-    
   })
 
   //bulk upsert to database as JSONB data
-
   // when dashboard is rendered, bulk upsert static list into Category table
 
   db.Release.bulkCreate(
