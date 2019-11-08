@@ -100,8 +100,8 @@ async function sync(req, res) {
   db.Release.bulkCreate(
     releaseModel,
     { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
-      // fields: ["instance_id", "rating"], //if rating is exclusive to user, do not share in community
-      updateOnDuplicate: ["id"]
+      // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
+      updateOnDuplicate: ["labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"]
     }
   )
   // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))

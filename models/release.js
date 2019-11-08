@@ -10,39 +10,41 @@ module.exports = function(sequelize, DataTypes) {
       // rating: {
       //   type: DataTypes.INTEGER
       // },
-      index_release: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        allowNull: false,
-        autoIncrement: true
-
-      },
+    //   index_release: {
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     allowNull: false,
+    //     autoIncrement: true
+    //   },
     //   labels: DataTypes.ARRAY(DataTypes.STRING),
-      labels: DataTypes.JSON,
+      labels: DataTypes.JSONB,
       year: DataTypes.INTEGER,
       master_url: {
         type: DataTypes.STRING,
         allowNull: true
       },
-      artists: DataTypes.JSON,
+      artists: DataTypes.JSONB,
     //   artists: DataTypes.ARRAY(DataTypes.STRING),
-      id: DataTypes.INTEGER,
+      id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+        },
       thumb: DataTypes.STRING,
       title: DataTypes.STRING,
-      formats: DataTypes.JSON,
+      formats: DataTypes.JSONB,
     //   formats: DataTypes.ARRAY(DataTypes.STRING),
       cover_image: DataTypes.STRING,
       resource_url: DataTypes.STRING,
       master_id: DataTypes.INTEGER
     },
-    {
-      indexes: [
-        {
-          unique: true,
-          fields: ["index_release"]
-        }
-      ]
-    }
+    // {
+    //   indexes: [
+    //     {
+    //       unique: true,
+    //       fields: ["index_release"]
+    //     }
+    //   ]
+    // }
   );
   return Release;
 };
