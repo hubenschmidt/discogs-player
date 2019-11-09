@@ -10,13 +10,13 @@ module.exports = function(sequelize, DataTypes) {
       // rating: {
       //   type: DataTypes.INTEGER
       // },
-      //   index_release: {
-      //     type: DataTypes.INTEGER,
-      //     primaryKey: true,
-      //     allowNull: false,
-      //     autoIncrement: true
-      //   },
-      //   labels: DataTypes.ARRAY(DataTypes.STRING),
+    //   index_release: {
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    //     allowNull: false,
+    //     autoIncrement: true
+    //   },
+    //   labels: DataTypes.ARRAY(DataTypes.STRING),
       labels: DataTypes.JSONB,
       year: DataTypes.INTEGER,
       master_url: {
@@ -24,19 +24,19 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: true
       },
       artists: DataTypes.JSONB,
-      //   artists: DataTypes.ARRAY(DataTypes.STRING),
+    //   artists: DataTypes.ARRAY(DataTypes.STRING),
       id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      },
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+        },
       thumb: DataTypes.STRING,
       title: DataTypes.STRING,
       formats: DataTypes.JSONB,
-      //   formats: DataTypes.ARRAY(DataTypes.STRING),
+    //   formats: DataTypes.ARRAY(DataTypes.STRING),
       cover_image: DataTypes.STRING,
       resource_url: DataTypes.STRING,
       master_id: DataTypes.INTEGER
-    }
+    },
 
     // {
     //   indexes: [
@@ -47,8 +47,14 @@ module.exports = function(sequelize, DataTypes) {
     //   ]
     // }
   );
-  Release.associate = function(models) {
-    Release.hasMany(models.Instance, { as: "instances" });
-  };
+  Release.associate = function(models){
+    Release.hasMany(models.Instance, {as: 'instances'})
+  }
+
+//   Release.associate = function (models) {
+//     Release.hasMany(models.Instance, {
+//         onDelete: 'cascade'
+//     })
+// }
   return Release;
 };

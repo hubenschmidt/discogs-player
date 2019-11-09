@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     id: DataTypes.INTEGER
   });
   Instance.associate = function(models) {
-    Instance.belongsTo(models.Release, { foreignKey: "id", as: "release" });
+    Instance.belongsTo(models.Release, { foreignKey: "id", as: "release", allowNull: false });
   };
 
   return Instance;
