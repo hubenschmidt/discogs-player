@@ -88,26 +88,33 @@ async function sync(req, res) {
 
   // console.log(releases[0].basic_information, "logging collArr from sync function");
 
-  console.log(releases)
-
-  let releaseModel = releases.map(release=>{
+  let releaseModel = releases.map(release => {
     // console.log(release.basic_information, 'logging release map')
     return release.basic_information;
+  });
+
+  let instanceModel = releases.map(release => {
+    // console.log(release.basic_information, 'logging release map')
+    return release;
+  });
+
+  //bulk upsert to database
+
+  db.Release.bulkCreate(releaseModel, {
+    // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
+    // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
+    // updateOnDuplicate: ["labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"],
+    updateOnDuplicate: ["id"]
   })
-
-  //bulk upsert to database as JSONB data
-  // when dashboard is rendered, bulk upsert static list into Category table
-
-  db.Release.bulkCreate(
-    releaseModel,
-    { // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
-      // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
-      // updateOnDuplicate: ["labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"],
-      updateOnDuplicate: ["id"]
-    }
-  )
-  // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
-  .then(dbModel => dbModel).catch(err=>console.log(err))
+    // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
+    .then(dbModel =>
+      db.Instance.bulkCreate(instanceModel, {
+        updateOnDuplicate: ["id"]
+      })
+        .then(dbModel => dbModel)
+        .catch(err => console.log(err))
+    )
+    .catch(err => console.log(err));
 
   //return res.json
 
