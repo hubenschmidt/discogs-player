@@ -14,10 +14,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     date_added: DataTypes.STRING,
     id: DataTypes.INTEGER
+    // ReleaseId: DataTypes.INTEGER
   });
-  Instance.associate = function(models) {
-    Instance.belongsTo(models.Release, { foreignKey: "id", as: "release", allowNull: false });
-  };
+  // Instance.associate = function(models) {
+  //   Instance.belongsTo(models.Release, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //     // foreignKey: "id", as: "releases",
+  //   });
+  // };
 
   return Instance;
 };

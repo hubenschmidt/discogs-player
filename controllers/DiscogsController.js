@@ -111,7 +111,7 @@ async function sync(req, res) {
       db.Instance.bulkCreate(instanceModel, {
         updateOnDuplicate: ["id"]
       })
-        .then(dbModel => dbModel)
+        .then(dbModel => dbmodel)
         .catch(err => console.log(err))
     )
     .catch(err => console.log(err));
