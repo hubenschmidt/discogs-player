@@ -14,13 +14,13 @@ async function test(req, res) {
   res.send("welcome to discogs api route");
 }
 
-function copy(obj) {
-  var cp = {};
-  for (var o in obj) {
-    cp[o] = obj[o];
-  }
-  return cp;
-}
+// function copy(obj) {
+//   var cp = {};
+//   for (var o in obj) {
+//     cp[o] = obj[o];
+//   }
+//   return cp;
+// }
 
 async function paginateCollection(userData, pageNum, collection = []) {
   // var userData = await getUserData(userId);
@@ -108,10 +108,21 @@ async function sync(req, res) {
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
     .then(dbModel =>
-      db.Instance.bulkCreate(instanceModel, {
-        updateOnDuplicate: ["id"]
+      db.Instance.create({
+        id: userId,
+        UserId: userId
       })
-        .then(dbModel => dbmodel)
+      // db.Instance.bulkCreate(instanceModel, {
+        // db.Instance.bulkCreate({UserId: userId}, {
+        // updateOnDuplicate: ["id"]
+      // }, 
+      // {
+      //   where: {
+      //     UserId: userId
+      //   }
+      // }
+      )
+        .then(dbModel => console.log(dbModel, 'INSTANCE CREATED========with: ', userId)
         .catch(err => console.log(err))
     )
     .catch(err => console.log(err));

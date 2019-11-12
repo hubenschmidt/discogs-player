@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     // },
     email: {
       type: DataTypes.STRING,
-      required: true,
+      required: true
       // validate: {
       //   isEmail: true
       // }
@@ -24,18 +24,17 @@ module.exports = function(sequelize, DataTypes) {
     discogsId: {
       type: DataTypes.INTEGER
     },
-    discogsUsername:{
-      type: DataTypes.STRING,
+    discogsUsername: {
+      type: DataTypes.STRING
     },
     token: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       // allowNull: true
     },
     tokenSecret: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       // allowNull: true
     }
-
   });
 
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
@@ -53,6 +52,14 @@ module.exports = function(sequelize, DataTypes) {
     );
   });
 
+  User.associate = function(models) {
+    User.hasMany(models.Instance, {
+      foreignKey: {
+        allowNull: true
+      }
+      // foreignKey: "id", as: "instances",
+    });
+  };
 
   return User;
 };
