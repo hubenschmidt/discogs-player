@@ -93,13 +93,20 @@ async function sync(req, res) {
     return release.basic_information;
   });
 
-  let instanceModel = releases.map(release => {
-    // console.log(release.basic_information, 'logging release map')
-    return release;
+  let instanceObj = releases.map(release => {
+    // set model properties to correspond to instance model in postgres db
+    let obj = {
+      instance_id: release.instance_id,
+      rating: release.rating,
+      folder_id: release.folder_id,
+      date_added: release.date_added,
+      id: release.id,
+      UserId: userId
+    };
+    return obj;
   });
 
   //bulk upsert to database
-
   db.Release.bulkCreate(releaseModel, {
     // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
     // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
@@ -108,22 +115,9 @@ async function sync(req, res) {
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
     .then(dbModel =>
-      db.Instance.create({
-        id: userId,
-        UserId: userId
-      })
-      // db.Instance.bulkCreate(instanceModel, {
-        // db.Instance.bulkCreate({UserId: userId}, {
-        // updateOnDuplicate: ["id"]
-      // }, 
-      // {
-      //   where: {
-      //     UserId: userId
-      //   }
-      // }
-      )
-        .then(dbModel => console.log(dbModel, 'INSTANCE CREATED========with: ', userId)
-        .catch(err => console.log(err))
+      db.Instance.bulkCreate(instanceObj, {
+        updateOnDuplicate: ["id"]
+      }).catch(err => console.log(err))
     )
     .catch(err => console.log(err));
 
