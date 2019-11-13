@@ -37,7 +37,10 @@ async function paginateCollection(userData, pageNum, collection = []) {
 
   return new Promise((resolve, reject) => {
     col
-      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 500 })
+      .getReleases(userData.discogsUsername, 0, {
+        page: pageNum,
+        per_page: 500
+      })
       .then(data => {
         collection = collection.concat(data.releases);
 
@@ -93,6 +96,15 @@ async function sync(req, res) {
     return release.basic_information;
   });
 
+  // deduplicate release array before persisting to db:
+  let seen = new Set();
+
+  let filteredArr = releaseModel.filter(el => {
+    const duplicate = seen.has(el.id);
+    seen.add(el.id);
+    return !duplicate;
+  });
+
   let instanceModel = releases.map(release => {
     // set model properties to correspond to instance model in postgres db
     return {
@@ -107,7 +119,8 @@ async function sync(req, res) {
   });
 
   //bulk upsert to database
-  db.Release.bulkCreate(releaseModel, {
+  // db.Release.bulkCreate(releaseModel, {
+  db.Release.bulkCreate(filteredArr, {
     // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
     // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
     // updateOnDuplicate: ["labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"],
