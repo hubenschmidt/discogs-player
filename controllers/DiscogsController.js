@@ -101,10 +101,13 @@ async function sync(req, res) {
       folder_id: release.folder_id,
       date_added: release.date_added,
       id: release.id,
-      UserId: userId
+      UserId: userId,
+      ReleaseId: release.id
     };
     // return obj;
   });
+
+  console.log(instanceModel)
 
   //bulk upsert to database
   db.Release.bulkCreate(releaseModel, {
