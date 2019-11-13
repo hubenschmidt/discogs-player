@@ -128,15 +128,18 @@ async function sync(req, res) {
     updateOnDuplicate: ["id"]
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
-    .then(dbModel =>
-      db.Instance.bulkCreate(instanceModel, {
-        updateOnDuplicate: ["id"]
-      })
-    )
     .then(dbModel => {
       console.log(dbModel);
       res.json(dbModel);
+      db.Instance.bulkCreate(instanceModel, {
+        updateOnDuplicate: ["id"]
+      });
     })
+    // returns instanceModel
+    // .then(dbModel => {
+    //   console.log(dbModel);
+    //   res.json(dbModel);
+    // })
     .catch(err => {
       console.log(err);
       res.json(err);
