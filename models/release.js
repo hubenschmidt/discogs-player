@@ -47,9 +47,9 @@ module.exports = function(sequelize, DataTypes) {
     //   ]
     // }
   );
-  // Release.associate = function(models) {
-  //   Release.hasMany(models.Instance, { onDelete: "cascade" });
-  // };
+  Release.associate = function(models) {
+    Release.hasMany(models.Instance, { onDelete: "cascade" });
+  };
 
   //   Release.associate = function (models) {
   //     Release.hasMany(models.Instance, {

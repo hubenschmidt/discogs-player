@@ -93,9 +93,9 @@ async function sync(req, res) {
     return release.basic_information;
   });
 
-  let instanceObj = releases.map(release => {
+  let instanceModel = releases.map(release => {
     // set model properties to correspond to instance model in postgres db
-    let obj = {
+    return {
       instance_id: release.instance_id,
       rating: release.rating,
       folder_id: release.folder_id,
@@ -103,7 +103,7 @@ async function sync(req, res) {
       id: release.id,
       UserId: userId
     };
-    return obj;
+    // return obj;
   });
 
   //bulk upsert to database
@@ -115,11 +115,14 @@ async function sync(req, res) {
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
     .then(dbModel =>
-      db.Instance.bulkCreate(instanceObj, {
+      db.Instance.bulkCreate(instanceModel, {
         updateOnDuplicate: ["id"]
-      }).catch(err => console.log(err))
+      })
     )
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      res.json(err);
+    });
 
   //return res.json
 

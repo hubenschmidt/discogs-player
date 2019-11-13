@@ -22,30 +22,32 @@ module.exports = function(sequelize, DataTypes) {
       }
       // ReleaseId: DataTypes.INTEGER
     },
-    {
-      classMethods: {
-        associate: function(models) {
-          Instance.hasOne(models.User);
-        }
-      }
-    }
+    // {
+    //   classMethods: {
+    //     associate: function(models) {
+    //       Instance.belongsTo(models.User);
+    //     }
+    //   }
+    // }
   );
-  // Instance.associate = function(models) {
-  //   Instance.belongsTo(models.Release, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //     // foreignKey: "id", as: "releases",
-  //   });
-  // };
 
-  // Instance.associate = function(models) {
-  //   Instance.belongsTo(models.User, {
-  //     foreignKey: "UserId",
-  //     allowNull: true
-  //     // foreignKey: "id", as: "instances",
-  //   });
-  // };
+
+  Instance.associate = function(models) {
+    Instance.belongsTo(models.Release, {
+      // foreignKey: {
+      //   allowNull: false
+      // }
+      // foreignKey: "id", as: "releases",
+    });
+  };
+
+  Instance.associate = function(models) {
+    Instance.belongsTo(models.User, {
+      // foreignKey: "UserId",
+      // allowNull: true
+      // foreignKey: "id", as: "instances",
+    });
+  };
 
   return Instance;
 };

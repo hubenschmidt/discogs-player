@@ -54,9 +54,10 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = function(models) {
     User.hasMany(models.Instance, {
-      foreignKey: {
-        allowNull: true
-      }
+      onDelete: "cascade"
+      // foreignKey: {
+      //   allowNull: true
+      // }
       // foreignKey: "id", as: "instances",
     });
   };
