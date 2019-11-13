@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       //assoication between collection item and instance
       instance_id: {
         type: DataTypes.INTEGER,
-        // primaryKey: true
+        primaryKey: true
       },
       rating: {
         type: DataTypes.INTEGER
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       date_added: DataTypes.STRING,
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        // primaryKey: true,
         allowNull: true
       }
       // ReleaseId: DataTypes.INTEGER
@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
 
   Instance.associate = function(models) {
     Instance.belongsTo(models.Release, {
+        onDelete: "cascade"
       // foreignKey: {
       //   allowNull: false
       // }
@@ -43,6 +44,7 @@ module.exports = function(sequelize, DataTypes) {
 
   Instance.associate = function(models) {
     Instance.belongsTo(models.User, {
+      onDelete: "cascade"
       // foreignKey: "UserId",
       // allowNull: true
       // foreignKey: "id", as: "instances",

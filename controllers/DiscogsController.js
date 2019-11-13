@@ -37,7 +37,7 @@ async function paginateCollection(userData, pageNum, collection = []) {
 
   return new Promise((resolve, reject) => {
     col
-      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 2 })
+      .getReleases(userData.discogsUsername, 0, { page: pageNum, per_page: 500 })
       .then(data => {
         collection = collection.concat(data.releases);
 
@@ -70,7 +70,7 @@ async function getUserCollection(userId) {
 
   // var coll = await paginateCollection(userData, 6);
   // console.log(coll);
-  let paginatedCollection = await paginateCollection(userData, 686);
+  let paginatedCollection = await paginateCollection(userData, 1);
   //   console.log(paginatedCollection)
 
   return new Promise((resolve, reject) => {
@@ -104,10 +104,7 @@ async function sync(req, res) {
       UserId: userId,
       ReleaseId: release.id
     };
-    // return obj;
   });
-
-  console.log(instanceModel)
 
   //bulk upsert to database
   db.Release.bulkCreate(releaseModel, {
@@ -122,6 +119,7 @@ async function sync(req, res) {
         updateOnDuplicate: ["id"]
       })
     )
+    // .then(dbModel => res.json(dbModel))
     .catch(err => {
       console.log(err);
       res.json(err);
