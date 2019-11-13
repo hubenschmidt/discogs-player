@@ -61,6 +61,7 @@ async function paginateCollection(userData, pageNum, collection = []) {
 async function getUserData(id) {
   return new Promise((resolve, reject) => {
     try {
+      //find by app user id
       resolve(db.User.findByPk(id));
     } catch (e) {
       reject(e);
@@ -132,7 +133,10 @@ async function sync(req, res) {
         updateOnDuplicate: ["id"]
       })
     )
-    // .then(dbModel => res.json(dbModel))
+    .then(dbModel => {
+      console.log(dbModel);
+      res.json(dbModel);
+    })
     .catch(err => {
       console.log(err);
       res.json(err);
