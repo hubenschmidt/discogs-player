@@ -122,17 +122,38 @@ async function sync(req, res) {
   //bulk upsert to database
   // db.Release.bulkCreate(releaseModel, {
   db.Release.bulkCreate(filteredArr, {
-    // change collecition model to include id field? and create sequential id in postgres for indexing? determine one-to-many schema for collection-to-user, release-to-community.
-    // fields: ["index_release", "labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"], //if rating is exclusive to user, do not share in community
-    // updateOnDuplicate: ["labels", "year", "master_url", "artists", "id", "thumb", "title", "formats", "cover_image", "resource_url", "master_id"],
-    updateOnDuplicate: ["id"]
+    //  * Fields to update if row key already exists (on duplicate key update)? (only supported by mysql &
+    //   * mariadb). By default, all fields are updated.
+    //   */
+    // updateOnDuplicate: ["id"]
+
+    //if duplicate, update all the fields. for some reason, not doing so causes a validation error:
+    updateOnDuplicate: [
+      "labels",
+      "year",
+      "master_url",
+      "artists",
+      "id",
+      "thumb",
+      "title",
+      "formats",
+      "cover_image",
+      "resource_url",
+      "master_id"
+    ]
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
     .then(dbModel => {
       console.log(dbModel);
       res.json(dbModel);
       db.Instance.bulkCreate(instanceModel, {
-        updateOnDuplicate: ["id"]
+        updateOnDuplicate: [
+          "instance_id",
+          "rating",
+          "folder_id",
+          "date_added",
+          "id"
+        ]
       });
     })
     // returns instanceModel
