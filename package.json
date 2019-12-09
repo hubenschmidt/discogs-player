@@ -65,6 +65,7 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.18.4",
+    "socket.io": "^2.3.0",
     "validator": "^11.1.0"
   }
 }
