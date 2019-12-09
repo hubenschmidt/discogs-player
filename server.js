@@ -14,7 +14,6 @@ const http = require('http');
 const socketio = require('socket.io');
 let server;
 
-
 // const passportInit = require('./lib/passport.init');
 
 // initalize sequelize with session store
@@ -69,7 +68,6 @@ else {
   server = https.createServer(certOptions, app)
 }
 
-
 //sessions
 const myStore = new SequelizeStore({
   db: db.sequelize,
@@ -100,9 +98,6 @@ app.use(passport.session()) // calls the deserializer
 
 // //set up routes
 app.use(routes);
-
-
-
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
