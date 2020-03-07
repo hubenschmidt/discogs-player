@@ -8,15 +8,15 @@ module.exports = {
     password: process.env.DEVELOPMENT_DB_PASSWORD,
     database: process.env.DEVELOPMENT_DB_DATABASE,
     host: process.env.DEVELOPMENT_DB_HOST,
-    dialect: "postgres",
+    dialect: 'postgres',
     logging: false
   },
   test: {
-    username: "postgres_test",
+    username: 'postgres_test',
     password: null,
-    database: "discogs-player_test",
-    host: "127.0.0.1",
-    dialect: "postgres",
+    database: 'discogs-player_test',
+    host: '127.0.0.1',
+    dialect: 'postgres'
   },
   production: {
     username: process.env.PRODUCTION_DB_USERNAME,
@@ -24,7 +24,7 @@ module.exports = {
     database: process.env.PRODUCTION_DB_DATABASE,
     host: process.env.PRODUCTION_DB_HOST,
     URI: process.env.PRODUCTION_DATABASE_URL,
-    dialect: "postgres",
+    dialect: 'postgres',
     logging: false
   }
 };
