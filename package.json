@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Mern Demo",
   "main": "server.js",
+  "engines": {
+    "node": "13.10.1"
+  },
   "scripts": {
     "dev": "nodemon --exec babel-node ./server.js",
     "test": "export NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc mocha ./test/test.js --timeout 20000 --exit",
