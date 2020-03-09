@@ -32,7 +32,7 @@ export class Instance extends Model<Instance> {
   folder_id!: number;
 
   @Column({
-    type: DataType.INTEGER
+    type: DataType.DATE
   })
   date_added!: Date;
 
