@@ -11,49 +11,43 @@ import { User } from './User';
 
 @Table
 export class Instance extends Model<Instance> {
-  // if constructor was needed to initialize model properties (instead use ! in property name):
-  constructor(instance_id: number) {
-    super();
-    this.instance_id = instance_id;
-  }
-
   // @PrimaryKey
   @Column({
     // defaultValue: DataType.UUIDV1,
     // unique: true,
-    primaryKey: true
+    primaryKey: true,
     // type: DataType.UUID
-    // type: DataType.NUMBER
+    type: DataType.INTEGER
   })
-  instance_id: number;
+  instance_id!: number;
 
   @Column({
-    // type: DataType.NUMBER
+    type: DataType.INTEGER
   })
   rating!: number;
 
   @Column({
-    // type: DataType.NUMBER
+    type: DataType.INTEGER
   })
   folder_id!: number;
 
   @Column({
-    // type: DataType.DATE
+    type: DataType.INTEGER
   })
   date_added!: Date;
 
   @Column({
-    // type: DataType.NUMBER
+    type: DataType.INTEGER
   })
   id!: number;
 
   @BelongsTo(() => Release, {
-    onDelete: 'CASCADE'
+    onDelete: 'cascade'
   })
   release!: Release;
 
   @BelongsTo(() => User, {
-    onDelete: 'CASCADE'
+    onDelete: 'cascade'
   })
   user!: User;
 }
