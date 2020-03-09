@@ -10,5 +10,4 @@ import http from 'http';
 import socketio from 'socket.io';
 import SequelizeStore from 'connect-session-sequelize';
 import { AppRouter } from './AppRouter';
-import * from './models'
-
+import { Instance, Release, Session, User } from './models';

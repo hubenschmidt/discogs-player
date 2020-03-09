@@ -7,7 +7,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table
-class Session extends Model<Session> {
+export class Session extends Model<Session> {
   @PrimaryKey
   @Column
   sid!: string;
