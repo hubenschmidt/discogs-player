@@ -3,31 +3,57 @@ import {
   Column,
   Table,
   PrimaryKey,
-  BelongsToMany,
-  Scopes,
-  CreatedAt,
-  UpdatedAt,
-  AllowNull
+  BelongsTo,
+  DataType
 } from 'sequelize-typescript';
-// import { UUID } from "sequelize/types";
+import { Release } from './Release';
+import { User } from './User';
 
 @Table
 export class Instance extends Model<Instance> {
-  @PrimaryKey
-  @Column
-  instance_id!: number;
+  // if constructor was needed to initialize model properties (instead use ! in property name):
+  constructor(instance_id: number) {
+    super();
+    this.instance_id = instance_id;
+  }
 
-  @Column
+  // @PrimaryKey
+  @Column({
+    // defaultValue: DataType.UUIDV1,
+    // unique: true,
+    primaryKey: true
+    // type: DataType.UUID
+    // type: DataType.NUMBER
+  })
+  instance_id: number;
+
+  @Column({
+    // type: DataType.NUMBER
+  })
   rating!: number;
 
-  @Column
+  @Column({
+    // type: DataType.NUMBER
+  })
   folder_id!: number;
 
-  @Column
-  date_added!: string;
+  @Column({
+    // type: DataType.DATE
+  })
+  date_added!: Date;
 
-  @Column
+  @Column({
+    // type: DataType.NUMBER
+  })
   id!: number;
 
-  //add associations next
+  @BelongsTo(() => Release, {
+    onDelete: 'CASCADE'
+  })
+  release!: Release;
+
+  @BelongsTo(() => User, {
+    onDelete: 'CASCADE'
+  })
+  user!: User;
 }
