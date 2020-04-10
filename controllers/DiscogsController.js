@@ -1,17 +1,17 @@
 //test controller methods in postman
 //after tests succeed, break into service/controller/model architecture
-const db = require("../models");
-const Discogs = require("disconnect").Client;
-const { DISCOGS_CONFIG } = require("../config/oauth/index");
+const db = require('../models');
+const Discogs = require('disconnect').Client;
+const { DISCOGS_CONFIG } = require('../config/oauth/index');
 
 module.exports = {
   test: test,
-  sync: sync
+  sync: sync,
 };
 
 //TEST AND REFACTOR==============
 async function test(req, res) {
-  res.send("welcome to discogs api route");
+  res.send('welcome to discogs api route');
 }
 
 // function copy(obj) {
@@ -25,12 +25,12 @@ async function test(req, res) {
 async function paginateCollection(userData, pageNum, collection = []) {
   // var userData = await getUserData(userId);
   let accessData = {
-    method: "oauth",
+    method: 'oauth',
     level: 2,
     consumerKey: DISCOGS_CONFIG.consumerKey,
     consumerSecret: DISCOGS_CONFIG.consumerSecret,
     token: userData.token,
-    tokenSecret: userData.tokenSecret
+    tokenSecret: userData.tokenSecret,
   };
   //instantiate disconnect class to test identity
   var col = new Discogs(accessData).user().collection();
@@ -39,9 +39,9 @@ async function paginateCollection(userData, pageNum, collection = []) {
     col
       .getReleases(userData.discogsUsername, 0, {
         page: pageNum,
-        per_page: 500
+        per_page: 500,
       })
-      .then(data => {
+      .then((data) => {
         collection = collection.concat(data.releases);
 
         if (data.pagination.urls.next) {
@@ -54,7 +54,7 @@ async function paginateCollection(userData, pageNum, collection = []) {
           resolve(collection);
         }
       })
-      .catch(err => reject(err));
+      .catch((err) => reject(err));
   });
 }
 
@@ -92,21 +92,21 @@ async function sync(req, res) {
 
   // console.log(releases[0].basic_information, "logging collArr from sync function");
 
-  let releaseModel = releases.map(release => {
-    // console.log(release.basic_information, 'logging release map')
+  let releaseModel = releases.map((release) => {
+    // console.log(release.basic_information, 'logging release map');
     return release.basic_information;
   });
 
   // deduplicate release array before persisting to db:
   let seen = new Set();
 
-  let filteredArr = releaseModel.filter(el => {
+  let filteredArr = releaseModel.filter((el) => {
     const duplicate = seen.has(el.id);
     seen.add(el.id);
     return !duplicate;
   });
 
-  let instanceModel = releases.map(release => {
+  let instanceModel = releases.map((release) => {
     // set model properties to correspond to instance model in postgres db
     return {
       instance_id: release.instance_id,
@@ -115,7 +115,7 @@ async function sync(req, res) {
       date_added: release.date_added,
       id: release.id,
       UserId: userId,
-      ReleaseId: release.id
+      ReleaseId: release.id,
     };
   });
 
@@ -129,31 +129,33 @@ async function sync(req, res) {
 
     //if duplicate, update all the fields. for some reason, not doing so causes a validation error:
     updateOnDuplicate: [
-      "labels",
-      "year",
-      "master_url",
-      "artists",
-      "id",
-      "thumb",
-      "title",
-      "formats",
-      "cover_image",
-      "resource_url",
-      "master_id"
-    ]
+      'labels',
+      'year',
+      'master_url',
+      'artists',
+      'id',
+      'thumb',
+      'title',
+      'formats',
+      'genres',
+      'styles',
+      'cover_image',
+      'resource_url',
+      'master_id',
+    ],
   })
     // .then(dbModel => console.log(dbModel)).catch(err=>console.log(err))
-    .then(dbModel => {
-      console.log(dbModel);
+    .then((dbModel) => {
+      // console.log(dbModel);
       res.json(dbModel);
       db.Instance.bulkCreate(instanceModel, {
         updateOnDuplicate: [
-          "instance_id",
-          "rating",
-          "folder_id",
-          "date_added",
-          "id"
-        ]
+          'instance_id',
+          'rating',
+          'folder_id',
+          'date_added',
+          'id',
+        ],
       });
     })
     // returns instanceModel
@@ -161,7 +163,7 @@ async function sync(req, res) {
     //   console.log(dbModel);
     //   res.json(dbModel);
     // })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.json(err);
     });

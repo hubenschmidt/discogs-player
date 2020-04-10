@@ -1,6 +1,6 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Release = sequelize.define(
-    "Release",
+    'Release',
     {
       //move to instance.js and make one -to -many
       //assoication between collection item and instance
@@ -21,21 +21,23 @@ module.exports = function(sequelize, DataTypes) {
       year: DataTypes.INTEGER,
       master_url: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       artists: DataTypes.JSONB,
       //   artists: DataTypes.ARRAY(DataTypes.STRING),
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
       thumb: DataTypes.STRING,
       title: DataTypes.STRING,
       formats: DataTypes.JSONB,
       //   formats: DataTypes.ARRAY(DataTypes.STRING),
+      genres: DataTypes.STRING,
+      styles: DataTypes.JSONB,
       cover_image: DataTypes.STRING,
       resource_url: DataTypes.STRING,
-      master_id: DataTypes.INTEGER
+      master_id: DataTypes.INTEGER,
     }
 
     // {
@@ -47,8 +49,8 @@ module.exports = function(sequelize, DataTypes) {
     //   ]
     // }
   );
-  Release.associate = function(models) {
-    Release.hasMany(models.Instance, { onDelete: "cascade" });
+  Release.associate = function (models) {
+    Release.hasMany(models.Instance, { onDelete: 'cascade' });
   };
 
   //   Release.associate = function (models) {
