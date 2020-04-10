@@ -16,7 +16,7 @@ import database from '../src/config/database';
 import { Instance, Release, Session, User } from './models';
 
 // initialize Sequelize with session store:
-const sequelizeStore = new SequelizeStore(session.Store);
+// const sequelizeStore = new SequelizeStore(session.Store);
 
 // const passport =
 
