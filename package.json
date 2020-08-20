@@ -45,7 +45,7 @@
     "nyc": "^14.1.1"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bcrypt-nodejs": "0.0.3",
     "connect-session-sequelize": "^6.0.0",
     "cookie-parser": "^1.4.4",
